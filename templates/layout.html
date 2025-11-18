@@ -78,7 +78,7 @@
                       <i class="fa-regular fa-user"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><a class="dropdown-item" href="{% url 'profile_view' %}">Profile</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><button type="submit" data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2 text-success">Logout</button></li>
                     </ul>
@@ -138,6 +138,8 @@
                 <li><a href="{%url 'add_bank'%}" >Add Bank</a></li>
                 <li><a href="{%url 'keyword'%}" >Set Keywords</a></li>
                 <li><a href="{%url 'target_insert'%}" >Set Buget target</a></li>
+                <li><a href="{%url 'family_view'%}" >Invite Family</a></li>
+                <li><a href="{%url 'add_family'%}" >Add Family with Token</a></li>
               </ul>
             </div>
           </li>
@@ -160,7 +162,11 @@
             </button>
             <div class="collapse show" id="family-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="{%url 'family_view'%}" >Add Family</a></li>
+
+                <li><a href="{% url 'dashboard_view' %}" >Family DashBoard</a></li>
+                <li><a href="{%url 'monthly_view'%}" >Family Monthly View</a></li>
+                <li><a href="{%url 'annual_actual_view'%}" >Family Annually View</a></li>
+                <li><a href="{%url 'annual_target_view'%}" >Family Annual Target View</a></li>
               </ul>
             </div>
           </li>

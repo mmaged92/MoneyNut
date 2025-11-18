@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .forms import CreateUserForm
 from django.contrib import messages
+from userprofile.models import UserProfile
 # from django.contrib.auth.decorators import login_required
 
 # def main(request):
@@ -35,9 +36,14 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             login(request, form.save())
+            user = request.user
+            date = request.POST.get('Date_of_birth')
+            UserProfile.objects.create(user_id=user, Birth_date=date)
+            user = form.cleaned_data.get('username')
+            messages.success(request, " Account was created for " + user)
+        
             return redirect("dashboard_view")
-            #user = form.cleaned_data.get('username')
-            #messages.success(request, " Account was created for " + user)
+
         else:
             print(form.errors)
             return redirect("register")

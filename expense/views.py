@@ -137,7 +137,7 @@ def budget_status(user,category,d_s,d_e, days_month):
         target_total = 0
 
     target_No_FF_total =  budget_target.objects.aggregate(total=Sum('target', filter=Q(user_id=user,category_id__Fixed_fees=False,date__range=(d_s,d_e))))['total'] or 0
-
+    spent_FF_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,category_id__Fixed_fees=False, IO='expense', date__range=(d_s, d_e))))['total'] or 0
 
     if datetime.today() <= d_e:
         days = datetime.today().day 
@@ -148,7 +148,7 @@ def budget_status(user,category,d_s,d_e, days_month):
         status = 'Over Budget'
     elif spent_total == target_total:
         status = 'On Budget' 
-    elif (spent_total/int(days))  > (target_No_FF_total/days_month) :
+    elif (spent_FF_total/int(days))  > (target_No_FF_total/days_month) :
         status = 'Over Spending'
     elif spent_total < target_total:
         status = 'Under Budget' 
@@ -546,9 +546,10 @@ def monthly_balance_trackCalc(user):
 
 def total_spent_calc(user,year,month_no):
     d_s = datetime(year,month_no,1)  
+    d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,
                                                                                IO='expense', 
-                                                                             date__gt=d_s)))['total'] or 0
+                                                                             date__range=(d_s,d_e))))['total'] or 0
     sympol = "$"  
     return f"{sympol}{expense:,.2f}"
 

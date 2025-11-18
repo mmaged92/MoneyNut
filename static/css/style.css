@@ -15,6 +15,13 @@ body{
 p{
 	font-family: MV Boli;
 }
+
+h{
+	font-family: MV Boli;
+  font-weight: bold;
+  font-size: large;
+  
+}
 .header-R{
 	font-family: MV Boli;
 	font-size: 3rem;
@@ -595,5 +602,45 @@ a.btn-toggle:hover {
   position: relative;
   height: 600px;
   align-content: center;
+
+}
+.card-profile {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 20px 16px;
+  position: relative;
+  height: 700px;
+  align-content: center;
+
+}
+
+.card-reset-password{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 10px 10px 20px 16px;
+  margin: 20px 20px 20px 20px;
+  position: relative;
+  height: 200px;
+  align-content: center;
+
+}
+.card-reset-password-page{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 10px 10px 20px 16px;
+  margin: 20px 20px 20px 20px;
+  position: relative;
+  height: 400px;
+  align-content: center;
+
+}
+.family-invitation{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 10px 10px 20px 16px;
+  margin: 20px 20px 20px 20px;
+  position: relative;
+  height: 230px;
+  align-content: top;
 
 }
