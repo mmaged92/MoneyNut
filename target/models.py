@@ -6,6 +6,7 @@ from family.models import family
 class main_category(models.Model):
     user_id =  models.ForeignKey(User, on_delete=models.CASCADE)
     category_name = models.CharField(max_length=255, null=True)    
+    family_id = models.ForeignKey(family, on_delete=models.CASCADE, null=True, blank=True)
     
 class categories_table(models.Model):
     user_id =  models.ForeignKey(User, on_delete=models.CASCADE)

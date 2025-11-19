@@ -15,6 +15,8 @@ urlpatterns = [
     path('monthly_view/savingvstarget/',views.savingvstarget, name="savingvstarget"),
     path('annual_view/annual_target_view',views.annual_target_view, name="annual_target_view"),
     path('annual_view/annual_get_target/',views.annual_get_target, name="annual_get_target"),
+    path('annual_view/annual_Expected_income/',views.Expected_income_get, name="Expected_income_get"),
+    path('annual_view/annual_Expected_Saving/',views.Expected_Saving_get, name="Expected_Saving_get"),
     path('annual_view/annual_actual_view',views.annual_actual_view, name="annual_actual_view"),
     path('annual_view/annual_get_actual/',views.annual_get_actual, name="annual_get_actual"),
     path('annual_view/annual_spent/',views.annual_spent, name="annual_spent"),
@@ -34,4 +36,8 @@ urlpatterns = [
     path('dashboard/this_month_trans/',views.this_month_trans, name="this_month_trans"),
     path('dashboard/this_month_spent_sub_categ_percentage_inverse/',views.this_month_spent_percentage_inverse, name="this_month_spent_percentage_inverse"),
     path('dashboard/this_month_spent_sub_categ_percentage/',views.this_month_spent_sub_categ_percentage, name="this_month_spent_sub_categ_percentage"),
+    
+    
+    
+    
 ]

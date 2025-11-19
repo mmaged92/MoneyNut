@@ -10,7 +10,7 @@ import json
 from saving.models import SavingTarget
 from accounts.models import Accounts
 from accounts.views import update_account_balance
-
+from saving.models import SavingGoal, expectedIncome
 
 year_list = list(range(2023,2055))
 
@@ -356,13 +356,15 @@ def get_actual_calc(user):
         d_s = datetime(year, month_no, 1)
         d_e = d_s + relativedelta(months=1) - timedelta(days=1)
         month_title = month_dict_add[month_no]
-        actual_month_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,IO='expense', date__range=(d_s, d_e))))['total'] or 0
+        actual_month_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,IO='expense', date__range=(d_s, d_e))
+                                                                & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0
         category_dict[month_title] = round(actual_month_total,2)
         
         
     d_s = datetime(year, 1, 1)
     d_e = datetime(year, 12, 1)       
-    actual_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,IO='expense', date__range=(d_s, d_e))))['total'] or 0    
+    actual_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,IO='expense', date__range=(d_s, d_e))
+                                                      & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0    
     category_dict['Total_Actual'] = round(actual_total,2)
     
     try:
@@ -543,13 +545,12 @@ def monthly_balance_trackCalc(user):
         date = date +timedelta(days=1)   
          
     return monthly_account__balance_list
-
 def total_spent_calc(user,year,month_no):
     d_s = datetime(year,month_no,1)  
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,
                                                                                IO='expense', 
-                                                                             date__range=(d_s,d_e))))['total'] or 0
+                                                                             date__range=(d_s,d_e)) & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0
     sympol = "$"  
     return f"{sympol}{expense:,.2f}"
 
@@ -599,7 +600,7 @@ def spent_trend(user,date):
     
         expense += trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,
                                                                                IO='expense', 
-                                                                               date=date_counter)))['total'] or 0
+                                                                               date=date_counter) & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0
         
         if date_counter <= today:
             cummulative_spent = round(expense,2)
@@ -738,6 +739,39 @@ def monthly_view(request):
     }  
     
     return render(request, 'expense/monthly.html',  context)
+
+
+def Expected_income_calc(user):
+    Expected_income_list =[]      
+    print(year) 
+    for month_no in range(1,13):
+        d_s = datetime(year,month_no,1)
+        d_e = d_s + relativedelta(months=1) - timedelta(days=1) 
+        month_title = month_dict_add[month_no]
+        Expected_income = expectedIncome.objects.aggregate(total=Sum('Expected_income', filter=Q(user_id=user,date__range=(d_s,d_e))))['total'] or 0
+        
+        Expected_income_list.append({"label": month_title, "y": round(Expected_income,2)} )    
+     
+    return Expected_income_list
+    
+
+
+def Expected_Saving_calc(user):
+    Expected_saving_list =[]   
+    for month_no in range(1,13):
+        d_s = datetime(year,month_no,1)
+        d_e = d_s + relativedelta(months=1) - timedelta(days=1) 
+        month_title = month_dict_add[month_no]
+        target = category_target_sum(user,None,d_s,d_e)
+        Expected_income = expectedIncome.objects.aggregate(total=Sum('Expected_income', filter=Q(user_id=user,date__range=(d_s,d_e))))['total'] or 0
+        Expected_saving = Expected_income - target
+        if Expected_saving <0:
+            Expected_saving = 0
+        Expected_saving_list.append({"label": month_title, "y": round(Expected_saving,2)}) 
+    return Expected_saving_list
+
+
+
 
 @login_required(login_url="/users/loginpage/")
 def monthly_get(request):    
@@ -933,4 +967,13 @@ def this_month_spent_percentage_inverse(request):
 @login_required(login_url="/users/loginpage/")
 def this_month_spent_sub_categ_percentage(request):
     return JsonResponse(this_month_spent_sub_category_calc(request.user,date.today()), safe=False)
+
+@login_required(login_url="/users/loginpage/")
+def Expected_income_get(request):
+    return JsonResponse(Expected_income_calc(request.user), safe=False)
+
+@login_required(login_url="/users/loginpage/")
+def Expected_Saving_get(request):
+    return JsonResponse(Expected_Saving_calc(request.user), safe=False)
+
 

@@ -110,6 +110,7 @@
                 <li><a href="{%url 'monthly_view'%}" >Monthly</a></li>
                 <li><a href="{%url 'annual_actual_view'%}" >Annually</a></li>
                 <li><a href="{%url 'annual_target_view'%}" >Annual Target</a></li>
+                <li><a href="{%url 'annual_target_view'%}" >Saving Goal View</a></li>
               </ul>
             </div>
           </li>
@@ -163,10 +164,11 @@
             <div class="collapse show" id="family-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
-                <li><a href="{% url 'dashboard_view' %}" >Family DashBoard</a></li>
-                <li><a href="{%url 'monthly_view'%}" >Family Monthly View</a></li>
-                <li><a href="{%url 'annual_actual_view'%}" >Family Annually View</a></li>
-                <li><a href="{%url 'annual_target_view'%}" >Family Annual Target View</a></li>
+                <li><a href="{% url 'family_dashboard_view' %}" >Family DashBoard</a></li>
+                <li><a href="{%url 'monthly_view_family'%}" >Family Monthly View</a></li>
+                <li><a href="{%url 'annual_actual_view_family'%}" >Family Annually View</a></li>
+                <li><a href="{%url 'annual_target_view_family'%}" >Family Annual Target View</a></li>
+                <li><a href="{%url 'annual_target_view'%}" >Family Saving Goal View</a></li>
               </ul>
             </div>
           </li>
