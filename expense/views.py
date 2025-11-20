@@ -30,6 +30,9 @@ month = month_dict[month_no]
 # date_end = date_start + relativedelta(months=1) 
 category_view ='Overall'
 
+Goal_id = ""
+
+
 def getMonthlyView(user):
     monthly_view=[]   
     month_no = next(int(n) for n, m in month_dict.items() if m == month)
@@ -976,4 +979,80 @@ def Expected_income_get(request):
 def Expected_Saving_get(request):
     return JsonResponse(Expected_Saving_calc(request.user), safe=False)
 
+@login_required(login_url="/users/loginpage/")
+def Saving_goal(request):
+    user =request.user
+    savings = SavingGoal.objects.filter(user_id=user)
+    today_date= date.today()
+    displayDate = today_date.strftime("%d %b, %Y")
+    goal_target = 0
+    goal_due_date = ""
+    Remaining = 0
+    status = ""
+    account_current_balance = 0
+    goal_name = ""
+    
+    if request.method == 'POST':
+        global Goal_id
+        Goal_id = request.POST.get('Saving_goal')
+        if not Goal_id:
+            return redirect('Saving_goal')
+        
+        goal = SavingGoal.objects.get(user_id=user,id=Goal_id)
+        goal_name = goal.Goal_name
+        goal_target = goal.Goal
+        goal_due_date = goal.due_date
+        goal_created_on = goal.create_date
+        account_current_balance = goal.Account.Balance
+        Remaining = goal_target - account_current_balance
+        
+        if Remaining >= goal_target:
+            Remaining = 0
+        
+        status =Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target)  
+    sympol = "$" 
+    
+    context={
+        "Goal_name": goal_name,
+        "savings": savings,
+        "today_date":displayDate,
+        "target": f"{sympol}{goal_target:,.2f}",
+        "current_balance": f"{sympol}{account_current_balance:,.2f}",
+        "duedate":goal_due_date,
+        "remaining": f"{sympol}{Remaining:,.2f}",
+        "status" : status
+    }
+    return render(request,"expense/savingGoal_view.html",context)
 
+@login_required(login_url="/users/loginpage/")
+def saving_goal_progress(request):
+    return JsonResponse(saving_goal_progresscalc(request.user,Goal_id),safe=False)
+
+
+def saving_goal_progresscalc(user,goal_id):
+    if goal_id:
+        goal = SavingGoal.objects.get(user_id=user,id=Goal_id)
+        goal_target = goal.Goal
+        account_current_balance = goal.Account.Balance
+        Remaining = goal_target - account_current_balance
+        
+        account_current_balance_perc = account_current_balance*100/goal_target
+        Remaining_perc = Remaining*100/goal_target
+    
+        return [{'y': account_current_balance_perc, 'label': 'Current balabce'}, {'y': Remaining_perc, 'label': 'Remaining'}]
+    return 
+
+    
+def Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target):
+    if Remaining == 0:
+        target_status = "Saving Goal Complete"
+    else:
+        days_to_target = (goal_due_date - goal_created_on).days 
+        days_to_ramaining = (goal_due_date - today_date).days
+        print(days_to_target,days_to_ramaining)
+        if Remaining/days_to_ramaining > goal_target/days_to_target:
+            target_status = "Not on Track to meet the Goal"
+        else:
+            target_status = "On Track to meet Saving Goal"
+    
+    return target_status
