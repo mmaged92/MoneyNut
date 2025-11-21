@@ -7,7 +7,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-
+from family.models import familyMemebers
 
 month_dict = {
     1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
@@ -86,13 +86,18 @@ category_list = ['housing',
 @login_required(login_url="/users/loginpage/")
 def category_add(request):
     user= request.user
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""
     for category in category_list:
         if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
-            categories_table.objects.create(user_id=user,categories_name=category)
+            categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id)
             
     for category in main_category_list:
         if not main_category.objects.filter(user_id=user, category_name=category).exists():
-            main_category.objects.create(user_id=user,category_name=category)
+            main_category.objects.create(user_id=user,category_name=category,family_id=family_id)
 
     if request.method == "POST":
         categories_new = request.POST.get('category')
@@ -107,7 +112,7 @@ def category_add(request):
         
         if categories_new: 
             if not categories_table.objects.filter(user_id=user, categories_name__iexact=categories_new, main_category_id__iexact=categories_new).exists():
-                categories_table.objects.create(user_id=user,categories_name=categories_new,Fixed_fees=fixed_fees,main_category_id=categories_new)
+                categories_table.objects.create(user_id=user,categories_name=categories_new,Fixed_fees=fixed_fees,main_category_id=categories_new,family_id=family_id)
         
             return redirect("category_add")
     main_categories =  main_category.objects.filter(user_id=user)
@@ -178,6 +183,11 @@ def category_delete(request):
 @login_required(login_url="/users/loginpage/")
 def target_insert(request):
     user= request.user
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""
     if request.method == "POST":
         freq = request.POST.get('frequency')
 
@@ -218,7 +228,7 @@ def target_insert(request):
                 month=date.month
                 month = month_dict[month]
                 if not budget_target.objects.filter(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date).exists():
-                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date)
+                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date,family_id=family_id)
                 date = date + relativedelta(months=1)
 
             return redirect("target_insert")    
@@ -228,7 +238,7 @@ def target_insert(request):
                 year = date.year
                 month = None                
                 if not budget_target.objects.filter(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date).exists():
-                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date)
+                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date,family_id=family_id)
                                             
                 date = date + relativedelta(years=1)
             return redirect("target_insert")  
@@ -239,7 +249,7 @@ def target_insert(request):
                 month=date.month
                 month = month_dict[month]
                 if not budget_target.objects.filter(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date).exists():
-                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date)
+                    budget_target.objects.create(user_id=user,frequency= freq, month=month,year=year,category_id=category,target=amount,date=date,family_id=family_id)
                 date = date + timedelta(days=14)
             return redirect("target_insert")  
     categories = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','unassigned','transfer','income'])

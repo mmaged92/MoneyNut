@@ -12,6 +12,7 @@ from django.contrib import messages
 import pandas as pd
 import io
 from datetime import datetime
+from family.models import familyMemebers
 
 
 # file_path = 'C:/Users/mahmo/OneDrive/Desktop/Budget/keyword.csv'
@@ -30,7 +31,11 @@ accounts = ['Chequing', ' Saving', 'Credit']
 @login_required(login_url="/users/loginpage/")
 def trans_add(request):
     user = request.user
-
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""
     
     if request.method == "POST":
         input_type = request.POST.get('input_type')
@@ -180,9 +185,9 @@ def trans_add(request):
                             date = date.strftime("%Y-%m-%d")
                         except ValueError:
                             date = row[Date_column_name]
-                            
+                          
                         if not trans.objects.filter(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category, main_category_id=category_main, IO = IO, Accounts_id= account_id).exists():
-                            trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id)
+                            trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id, family_id=family_id)
 
             except Exception:
                 return redirect("trans_page")
@@ -211,9 +216,13 @@ def trans_add(request):
                 category_name = categories_table.objects.get(user_id=user,categories_name='unassigned')
                 category = category_name
                 category_main = main_category.objects.get(user_id=user,category_name='unassigned')
-                  
+            if familyMemebers.objects.filter(user_id=user).exists():
+                family_id = familyMemebers.objects.get(user_id=user)
+                family_id = family_id.family_id
+            else:
+                family_id = ""      
             if not trans.objects.filter(user_id=user, description=description,date=date,amount=amount, category_id = category,main_category_id= category_main,IO = IO, Accounts_id=account_id).exists():
-                trans.objects.create(user_id=user,description=description,date=date,amount=amount, category_id = category,main_category_id= category_main ,IO = IO, Accounts_id=account_id)
+                trans.objects.create(user_id=user,description=description,date=date,amount=amount, category_id = category,main_category_id= category_main ,IO = IO, Accounts_id=account_id, family_id=family_id)
 
             
     categories = categories_table.objects.filter(user_id=user)
@@ -404,6 +413,11 @@ def transaction_delete(request):
 @login_required(login_url="/users/loginpage/")
 def keyword_insert(request):
     user = request.user
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""    
     if request.method == "POST":
         keyword = request.POST.get('new_keyword')
         category_id = request.POST.get('category_id')
@@ -412,7 +426,7 @@ def keyword_insert(request):
         if keyword and category_id:
             category_id = categories_table.objects.get(id=category_id)
             if not categorization.objects.filter(user_id=user,keyword=keyword, category_id = category_id).exists():    
-                categorization.objects.create(user_id=user,keyword=keyword, category_id = category_id)
+                categorization.objects.create(user_id=user,keyword=keyword, category_id = category_id,family_id=family_id)
         else:
             print("error") # insert message error
 

@@ -8,7 +8,7 @@ from django.shortcuts import render
 from datetime import datetime, timedelta
 from trans.models import trans
 from django.db.models import Q, Sum
-
+from family.models import familyMemebers
 
 # Create your views here.
 
@@ -47,9 +47,16 @@ def add_account(request):
     if request.user.is_authenticated:
             user = request.user
     
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""
+
+    
     for bank in banks_in_canada:
         if not Bank.objects.filter(user_id = user, Bank=bank).exists():
-            Bank.objects.create(user_id = user, Bank=bank)
+            Bank.objects.create(user_id = user, Bank=bank,family_id=family_id)
             
     if request.method == "POST":
         account_type = request.POST.get('account_type')
@@ -71,7 +78,7 @@ def add_account(request):
                 if not Starting_balance_date:
                     Starting_balance_date = ""
             
-            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date)
+            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date,family_id=family_id)
             return redirect('add_account')        
         
         if  account_type == 'cash':
@@ -83,7 +90,7 @@ def add_account(request):
                 if not Starting_balance_date:
                     Starting_balance_date = "" 
             account_number = ""
-            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name, Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date)
+            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name, Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date,family_id=family_id)
             return redirect('add_account')        
              
         if  account_type == 'Credit' or account_type == 'line of credit':    
@@ -92,7 +99,7 @@ def add_account(request):
                 account_number = ""
             Starting_balance = ""
             Starting_balance_date = ""
-            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance)
+            Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance,family_id=family_id)
             return redirect('add_account')             
         
         
@@ -105,12 +112,17 @@ def add_account(request):
 @login_required(login_url="/users/loginpage/")
 def add_bank(request):
     user = request.user
+    if familyMemebers.objects.filter(user_id=user).exists():
+        family_id = familyMemebers.objects.get(user_id=user)
+        family_id = family_id.family_id
+    else:
+        family_id = ""
     if request.method == "POST":
         Bank_new = request.POST.get('Bank_new')
         if not Bank_new:
             return redirect("add_bank")
         if not Bank.objects.filter(user_id = user, Bank=Bank_new):
-            Bank.objects.create(user_id = user, Bank=Bank_new)
+            Bank.objects.create(user_id = user, Bank=Bank_new,family_id=family_id)
             return redirect('add_bank')  
     return render(request, 'account/banks.html')
 

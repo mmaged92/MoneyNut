@@ -1045,14 +1045,14 @@ def saving_goal_progresscalc(user,goal_id):
     
 def Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target):
     if Remaining == 0:
-        target_status = "Saving Goal Complete"
+        target_status = "Goal Complete"
     else:
         days_to_target = (goal_due_date - goal_created_on).days 
         days_to_ramaining = (goal_due_date - today_date).days
         print(days_to_target,days_to_ramaining)
         if Remaining/days_to_ramaining > goal_target/days_to_target:
-            target_status = "Not on Track to meet the Goal"
+            target_status = "Not on Track"
         else:
-            target_status = "On Track to meet Saving Goal"
+            target_status = "On Track"
     
     return target_status
