@@ -106,7 +106,13 @@ def add_account(request):
     update_account_balance(user)
 
     Banks = Bank.objects.filter(user_id=user)
-    return render(request, 'account/account.html',{'Banks':Banks, 'accounts':accounts})
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+        
+    
+    return render(request, 'account/account.html',{'Banks':Banks, 'accounts':accounts,'isfamily':isfamily})
 
 
 @login_required(login_url="/users/loginpage/")
@@ -124,7 +130,12 @@ def add_bank(request):
         if not Bank.objects.filter(user_id = user, Bank=Bank_new):
             Bank.objects.create(user_id = user, Bank=Bank_new,family_id=family_id)
             return redirect('add_bank')  
-    return render(request, 'account/banks.html')
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+        
+    return render(request, 'account/banks.html',{"isfamily":isfamily})
 
 
 @login_required(login_url="/users/loginpage/")
@@ -148,7 +159,7 @@ def update_banks(request):
         update = Bank.objects.get(user_id=user,id=Bank_id)
         update.Bank = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -205,7 +216,7 @@ def accountname_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.account_name = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -220,7 +231,7 @@ def accounttype_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.account_type = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -235,7 +246,7 @@ def accountnumber_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.account_number = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -250,7 +261,7 @@ def accountbalancestart_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.Starting_balance = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -265,7 +276,7 @@ def accountbalance_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.Balance = newvalue
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -286,7 +297,7 @@ def account_date_update(request):
         update.Starting_balance_date = newvalue
         update.save()
         print(update.Starting_balance_date)
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")
@@ -302,7 +313,7 @@ def bank_update(request):
         update = Accounts.objects.get(user_id=user,id=account_id)
         update.Bank = bankNew
         update.save()
-        return JsonResponse({'status': 'updated'})
+        return JsonResponse({'status': 'updated','newValue':newvalue})
     return JsonResponse({"error":"invalid method"})
 
 @login_required(login_url="/users/loginpage/")

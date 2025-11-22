@@ -11,6 +11,7 @@ from saving.models import SavingTarget
 from accounts.models import Accounts
 from accounts.views import update_account_balance
 from saving.models import SavingGoal, expectedIncome
+from family.models import familyMemebers
 
 year_list = list(range(2023,2055))
 
@@ -130,33 +131,55 @@ def budget_status(user,category,d_s,d_e, days_month):
         spent_total =  category_spent_sum(user,None,d_s,d_e)
         target_total =  category_target_sum(user,None,d_s,d_e)
         category = ""
+        if spent_total == None:
+            spent_total = 0
+        if target_total == None:
+            target_total = 0
+            
+        target_No_FF_total =  budget_target.objects.aggregate(total=Sum('target', filter=Q(user_id=user,category_id__Fixed_fees=False,date__range=(d_s,d_e))))['total'] or 0
+        spent_FF_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,category_id__Fixed_fees=False, IO='expense', date__range=(d_s, d_e))))['total'] or 0
+
+        if datetime.today() <= d_e:
+            days = datetime.today().day 
+        else:
+            days = d_e.day
+        
+        if spent_total > target_total:
+            status = 'Over Budget'
+        elif spent_total == target_total:
+            status = 'On Budget' 
+        elif spent_total < target_total:
+            status = 'Under Budget' 
+            if ((spent_FF_total/int(days))  > (target_No_FF_total/days_month) ) and days != d_e.day :
+                status = 'Over Spending'
+
     else:
         spent_total =  category_spent_sum(user,category,d_s,d_e)
         target_total = category_target_sum(user,category,d_s,d_e)
         category= category.categories_name
-    if spent_total == None:
-        spent_total = 0
-    if target_total == None:
-        target_total = 0
+        if spent_total == None:
+            spent_total = 0
+        if target_total == None:
+            target_total = 0
 
-    target_No_FF_total =  budget_target.objects.aggregate(total=Sum('target', filter=Q(user_id=user,category_id__Fixed_fees=False,date__range=(d_s,d_e))))['total'] or 0
-    spent_FF_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,category_id__Fixed_fees=False, IO='expense', date__range=(d_s, d_e))))['total'] or 0
+        target_No_FF_total =  budget_target.objects.aggregate(total=Sum('target', filter=Q(user_id=user,category_id__Fixed_fees=False,date__range=(d_s,d_e))))['total'] or 0
+        spent_FF_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,category_id__Fixed_fees=False, IO='expense', date__range=(d_s, d_e))))['total'] or 0
 
-    if datetime.today() <= d_e:
-        days = datetime.today().day 
-    else:
-        days = d_e.day
-    
-    if spent_total > target_total:
-        status = 'Over Budget'
-    elif spent_total == target_total:
-        status = 'On Budget' 
-    elif (spent_FF_total/int(days))  > (target_No_FF_total/days_month) :
-        status = 'Over Spending'
-    elif spent_total < target_total:
-        status = 'Under Budget' 
+        if datetime.today() <= d_e:
+            days = datetime.today().day 
+        else:
+            days = d_e.day
         
-    print(category, spent_total, target_total, status)
+        if spent_total > target_total:
+            status = 'Over Budget'
+        elif spent_total == target_total:
+            status = 'On Budget' 
+        elif spent_total < target_total:
+            status = 'Under Budget' 
+            if ((spent_total/int(days))  > (target_total/days_month) ) and days != d_e.day :
+                status = 'Over Spending'
+
+
     return status
 
 def category_spent_pichart(user):
@@ -732,13 +755,21 @@ def monthly_view(request):
     for category in categories:
         category_list.append(category.categories_name)
     selected_category = request.session.get("selected_category", "Overall")
+    
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
     context = {
         'years': year_list,
         'months':month_list,
         "selected_year": year,
         "selected_month": month,
         "categories":category_list,
-        "selected_category":selected_category
+        "selected_category":selected_category,
+        "isfamily":isfamily
     }  
     
     return render(request, 'expense/monthly.html',  context)
@@ -810,11 +841,18 @@ def annual_target_view(request):
     for category in categories:
         category_list.append(category.categories_name)
     selected_category = request.session.get("selected_category", "Overall")
+    
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
     context = {
         'years': year_list,
         "selected_year": year,
         "categories":category_list,
-        "selected_category":selected_category
+        "selected_category":selected_category,
+        "isfamily":isfamily
     }  
     return render(request, 'expense/annually_target.html', context)
 
@@ -866,11 +904,19 @@ def annual_actual_view(request):
     for category in categories:
         category_list.append(category.categories_name)
     selected_category = request.session.get("selected_category", "Overall")
+    
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
     context = {
         'years': year_list,
         "selected_year": year,
         "categories":category_list,
-        "selected_category":selected_category
+        "selected_category":selected_category,
+        "isfamily":isfamily
     }  
     return render(request, 'expense/annually_actual.html', context)
 
@@ -909,15 +955,21 @@ def balance_track_monthly(request):
 
 @login_required(login_url="/users/loginpage/")
 def dashboard_view(request):
+    user=request.user
     month_no = date.today().month
     month= month_dict[month_no]
     user_name = request.user.first_name
     today_date= date.today()
     displayDate = today_date.strftime("%d %b, %Y")
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
     context ={
         "user_name" : user_name,
         "displayDate":displayDate,
-        "month":month
+        "month":month,
+        "isfamily": isfamily
     }
     return render(request,"expense/dashboard.html",context)
 
@@ -1012,6 +1064,12 @@ def Saving_goal(request):
         status =Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target)  
     sympol = "$" 
     
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
     context={
         "Goal_name": goal_name,
         "savings": savings,
@@ -1020,7 +1078,8 @@ def Saving_goal(request):
         "current_balance": f"{sympol}{account_current_balance:,.2f}",
         "duedate":goal_due_date,
         "remaining": f"{sympol}{Remaining:,.2f}",
-        "status" : status
+        "status" : status,
+        "isfamily":isfamily
     }
     return render(request,"expense/savingGoal_view.html",context)
 
@@ -1056,3 +1115,7 @@ def Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target
             target_status = "On Track"
     
     return target_status
+
+@login_required(login_url="/users/loginpage/")
+def accounts_view(request):
+    return render(request,"expense/account_view.html")

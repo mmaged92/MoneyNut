@@ -117,7 +117,14 @@ def category_add(request):
             return redirect("category_add")
     main_categories =  main_category.objects.filter(user_id=user)
     categories = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','unassigned','transfer','income'])
-    return render(request, 'target/category_edit.html', {"categories":categories, "main_categories":main_categories})
+    
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
+    return render(request, 'target/category_edit.html', {"categories":categories, "main_categories":main_categories,"isfamily":isfamily})
 
 @login_required(login_url="/users/loginpage/")
 def category_get(request):
@@ -254,7 +261,14 @@ def target_insert(request):
             return redirect("target_insert")  
     categories = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','unassigned','transfer','income'])
 
-    return render(request, 'target/targetset.html',{"categories":categories, "years" : years_list})
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
+    
+    return render(request, 'target/targetset.html',{"categories":categories, "years" : years_list,"isfamily":isfamily})
 
 @login_required(login_url="/users/loginpage/")
 def target_delete(request):
@@ -297,7 +311,7 @@ def category_update_target(request):
         update = budget_target.objects.get(user_id=user,id=target_id)
         update.category_id = newcategory
         update.save()
-        return JsonResponse({'status': 'modified'})
+        return JsonResponse({'status': 'modified','newValue':newValue})
     return JsonResponse({'error':'Invalid method'}, status = 405)
 
 @login_required(login_url="/users/loginpage/")
@@ -310,7 +324,7 @@ def target_update(request):
         update = budget_target.objects.get(user_id=user,id=target_id)
         update.target = newValue
         update.save()
-        return JsonResponse({'status':'updated'})
+        return JsonResponse({'status':'updated','newValue':newValue})
     return JsonResponse({'error':'Invalid method'}, status = 405)
 
 @login_required(login_url="/users/loginpage/")
@@ -330,7 +344,7 @@ def date_update(request):
         update.month = month
         update.save()
         
-        return JsonResponse({'status':'updated'})
+        return JsonResponse({'status':'updated','newValue':newValue})
     return JsonResponse({'error':'Invalid method'}, status = 405)
 
 @login_required(login_url="/users/loginpage/")
@@ -349,7 +363,7 @@ def freq_update(request):
             update = budget_target.objects.get(user_id=user,id=target_id)
             update.frequency = 'monthly'
             update.save()
-        return JsonResponse({'status':'updated'})
+        return JsonResponse({'status':'updated','newValue':newValue})
     return JsonResponse({'error':'Invalid method'}, status = 405)
 
 

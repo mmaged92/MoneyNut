@@ -53,9 +53,6 @@ async function confirm_delete_target(target_id) {
 }
 
 async function category_update_target(newValue, category_id, target_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
-
     const response = await fetch('/target/targetinsert/category_update_target', {
         method: 'PUT',
         headers: {
@@ -64,12 +61,13 @@ async function category_update_target(newValue, category_id, target_id) {
         },
         body: JSON.stringify({ newValue, category_id, target_id }),
     })
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(target_id));
+    if (rowNode) {
+            rowNode.setDataValue("category", data.new_value);
+    }
 }
 
 async function tagert_update(newValue, target_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
 
     const response = await fetch('/target/targetinsert/target_update', {
         method: 'PUT',
@@ -79,12 +77,15 @@ async function tagert_update(newValue, target_id) {
         },
         body: JSON.stringify({ newValue, target_id }),
     })
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(target_id));
+    if (rowNode) {
+            rowNode.setDataValue("target", data.new_value);
+    }
 }
 
 async function freq_update(newValue, target_id, year, month) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/target/targetinsert/freq_update', {
         method: 'PUT',
@@ -94,12 +95,15 @@ async function freq_update(newValue, target_id, year, month) {
         },
         body: JSON.stringify({ newValue, target_id, year, month }),
     })
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(target_id));
+    if (rowNode) {
+            rowNode.setDataValue("frequency", data.new_value);
+    }
 }
 
 async function date_update(newValue, target_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/target/targetinsert/date_update', {
         method: 'PUT',
@@ -109,7 +113,11 @@ async function date_update(newValue, target_id) {
         },
         body: JSON.stringify({ newValue, target_id}),
     })
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(target_id));
+    if (rowNode) {
+            rowNode.setDataValue("date", data.new_value);
+    }
 }
 
 

@@ -42,8 +42,6 @@ async function confirm_delete_account(account_id) {
 }
 
 async function Bank_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
 
     const response = await fetch('/accounts/bank_update/', {
         method: 'PUT',
@@ -55,12 +53,14 @@ async function Bank_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("Bank", data.new_value);
+    }
 }
 
 async function account_type_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
 
     const response = await fetch('/accounts/accounttype_update/', {
         method: 'PUT',
@@ -72,12 +72,15 @@ async function account_type_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("account_type", data.new_value);
+    }
 }
 
 async function account_name_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/accounts/accountname_update/', {
         method: 'PUT',
@@ -89,12 +92,15 @@ async function account_name_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("account_name", data.new_value);
+    }
 }
 
 async function account_number_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/accounts/accountnumber_update/', {
         method: 'PUT',
@@ -106,12 +112,15 @@ async function account_number_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("account_number", data.new_value);
+    }
 }
 
 async function Starting_balance_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/accounts/accountbalancestart_update/', {
         method: 'PUT',
@@ -123,11 +132,14 @@ async function Starting_balance_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("Starting_balance", data.new_value);
+    }
 }
 async function account_balance_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/accounts/accountbalance_update/', {
         method: 'PUT',
@@ -139,12 +151,15 @@ async function account_balance_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("account_balance", data.new_value);
+    }
 }
 
 async function account_balance_date_update(newValue, account_id) {
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
+
 
     const response = await fetch('/accounts/account_date_update/', {
         method: 'PUT',
@@ -156,7 +171,11 @@ async function account_balance_date_update(newValue, account_id) {
         
     })
 
-    window.location.reload();
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(account_id));
+    if (rowNode) {
+            rowNode.setDataValue("account_balance_start_date", data.new_value);
+    }
 }
 
 function getCookie(name) {

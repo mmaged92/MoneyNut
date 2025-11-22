@@ -24,9 +24,6 @@ async function fetchmaincategorieslist() {
 
 async function main_category_update_main(new_value, category_id) {
 
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
-
     const response = await fetch('/target/main_category_update/', {
         method: 'PUT',
         headers: {
@@ -40,13 +37,12 @@ async function main_category_update_main(new_value, category_id) {
     }
 
     const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(category_id));
+    if (rowNode) {
+            rowNode.setDataValue("Category", data.new_value);
+    }
 }
 async function main_category_update(new_value, category_id) {
-
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
 
     const response = await fetch('/target/category_main_category_update/', {
         method: 'PUT',
@@ -61,14 +57,14 @@ async function main_category_update(new_value, category_id) {
     }
 
     const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(category_id));
+    if (rowNode) {
+            rowNode.setDataValue("main_category", data.new_value);
+    }
 }
 
 async function fixed_fees_update(new_value, category_id) {
 
-    const isConfirmed = confirm('are you sure?');
-    if (!isConfirmed) return;
     console.log(new_value)
     const response = await fetch('/target/fixed_fees_update/', {
         method: 'PUT',
@@ -84,8 +80,10 @@ async function fixed_fees_update(new_value, category_id) {
     }
 
     const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(category_id));
+    if (rowNode) {
+            rowNode.setDataValue("fixed_fees", data.new_value);
+    }
 }
 
 

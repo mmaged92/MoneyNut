@@ -39,13 +39,10 @@ def trans_add(request):
     
     if request.method == "POST":
         input_type = request.POST.get('input_type')
-        
         if input_type =='file_upload':
-            
             Date_column_name = request.POST.get("Date_column_name")
             Description_column_name = request.POST.get("Description_column_name")
             Amount_column_name = request.POST.get("Amount_column_name")
-
             if not Date_column_name:
                 Date_column_name = "Date"
             if not Date_column_name:
@@ -60,8 +57,6 @@ def trans_add(request):
             
             if not file_path or not account_name or not card_type or not Amount_column_name or not Date_column_name or not Date_column_name:
                 return redirect("trans_page")
-            if ".csv"  not in file_path:
-                return redirect("trans_page")
 
             decoded_file = file_path.read().decode('utf-8-sig').splitlines()
             reader = csv.DictReader(decoded_file)
@@ -73,9 +68,6 @@ def trans_add(request):
             try:
                 # with open(file_path, newline='') as csvfile:
                 #     reader = csv.DictReader(csvfile)
-                
-                
-                
                 for row in rows:
                     amount  = row[Amount_column_name] if row['Amount'].strip() != '' else 0.0
                     
@@ -185,11 +177,14 @@ def trans_add(request):
                             date = date.strftime("%Y-%m-%d")
                         except ValueError:
                             date = row[Date_column_name]
-                          
+                        
+                        print("Success")
                         if not trans.objects.filter(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category, main_category_id=category_main, IO = IO, Accounts_id= account_id).exists():
                             trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id, family_id=family_id)
-
+                            print("")
+                print("Success")
             except Exception:
+                print("failed")
                 return redirect("trans_page")
             
             
@@ -228,9 +223,13 @@ def trans_add(request):
     categories = categories_table.objects.filter(user_id=user)
     account_names = Accounts.objects.filter(user_id=user)
     
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
        
 
-    return render(request, 'trans/trans.html', {'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names})
+    return render(request, 'trans/trans.html', {'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily})
 
 @login_required(login_url="/users/loginpage/")
 def trans_edit(request):
@@ -267,7 +266,14 @@ def trans_all(request):
 @login_required(login_url="/users/loginpage/")
 
 def trans_view(request):
-    return render(request, 'trans/view.html')
+    user= request.user
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
+    
+    
+    return render(request, 'trans/view.html',{"isfamily":isfamily})
 
 @login_required(login_url="/users/loginpage/")
 def Account_get(request):
@@ -430,22 +436,15 @@ def keyword_insert(request):
         else:
             print("error") # insert message error
 
-    # transactions = trans.objects.filter(user_id=user)
-    # for transaction in transactions:
-    #     description = transaction.description
-    #     try:
-    #         category_name = categorization.objects.get(user_id=user,keyword__contains=description)
-    #         category = category_name.category_id
-    #         transaction.category_id = category
-    #         transaction.save()
-    #     except Exception:
-    #         category_name = categories_table.objects.get(user_id=user,categories_name='unassigned')
-    #         transaction.category_id = category_name
-    #         transaction.save()
+
         
     category_list = categories_table.objects.filter(user_id=user)
+    if familyMemebers.objects.filter(user_id=user).exists():
+        isfamily = True
+    else:
+        isfamily = False
 
-    return render(request, 'trans/keyword.html', { 'category_list' : category_list})
+    return render(request, 'trans/keyword.html', { 'category_list' : category_list,"isfamily":isfamily})
 
 @login_required(login_url="/users/loginpage/")
 def keyword_all(request):

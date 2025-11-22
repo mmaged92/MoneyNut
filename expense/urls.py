@@ -38,6 +38,7 @@ urlpatterns = [
     path('dashboard/this_month_spent_sub_categ_percentage/',views.this_month_spent_sub_categ_percentage, name="this_month_spent_sub_categ_percentage"),
     path('saving_goal/',views.Saving_goal, name="Saving_goal"),
     path('saving_goal_progress/',views.saving_goal_progress, name="saving_goal_progress"),
+    path('accounts_view/',views.accounts_view, name="accounts_view"),
     
     
     

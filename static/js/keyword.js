@@ -39,8 +39,10 @@ async function keyword_update(new_value, keyword_id) {
     }
 
     const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(keyword_id));
+    if (rowNode) {
+            rowNode.setDataValue("keyword", data.new_value);
+    }
 }
 
 async function category_update(new_value, category_id, keyword_id) {
@@ -60,8 +62,10 @@ async function category_update(new_value, category_id, keyword_id) {
     }
 
     const result = await response.json();
-    console.log(result);
-    window.location.reload();
+    const rowNode = gridOptions.api.getRowNode(String(keyword_id));
+    if (rowNode) {
+            rowNode.setDataValue("category", data.new_value);
+    }
 }
 
 function getCookie(name) {

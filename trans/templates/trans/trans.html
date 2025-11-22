@@ -118,7 +118,7 @@
                             <label>Amount</label>
                         </div>
                         <div class="col-4 ">
-                            <input type='number' name = 'amount' id = 'amount' style="width: 100%;" required>
+                            <input type='number' step="0.01" name = 'amount' id = 'amount' style="width: 100%;" required>
                         </div>
                         <div class="col-2 ">
                             <label> Type </label>
@@ -164,9 +164,6 @@
                     <input type="hidden" name="input_type" value="single_entry">
                 </form>
             </div>
-            {% comment %} <h1>Transaction List</h1>
-            <i class="fa-solid fa-trash" id = 'deletealltrans'></i>
-            <div id="myGridtrans" style="height: 90vh"></div> {% endcomment %}
         </div>
     </div>
 </div>
@@ -175,7 +172,6 @@
 {% block extra_scripts %}
 
 {% load static %}  
-<script src="{% static 'js/trans.js' %}" defer></script>
 <script src="{% static 'js/upload.js' %}" defer></script>
 
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
