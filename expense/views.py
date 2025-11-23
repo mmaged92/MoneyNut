@@ -502,7 +502,7 @@ def monthly_balance_tracker(user):
                 accounts_balance = accounts_balance + account.Starting_balance
             
             
-        # print(month_title,previous_balance, accounts_balance , difference)  
+        print(month_title, accounts_balance)  
         account__balance_list.append({month_title: round(accounts_balance,2)} )
     # print(account__balance_list[0])
         
@@ -516,16 +516,21 @@ def annual_balance_trackCalc(user):
     month_no = 1
     for month_no in range(1,13):
         month_title = month_dict_add[month_no]
-        # print(balances[month_no-1][month_title])
         accounts_balance = balances[month_no-1][month_title]
+        
+        # print("current", month_no, month_title, accounts_balance)  
         if month_no == 1:
             previous_balance = accounts_balance
         else:
-            month_no = month_no - 1 
-            month_title = month_dict_add[month_no]
-            previous_balance = balances[month_no-1][month_title]
+            month_no_prev = month_no -1
+            month_title_prev = month_dict_add[month_no_prev]
+            previous_balance = balances[month_no_prev-1][month_title_prev]
+            # print("previous", month_no_prev, month_title_prev, previous_balance)   
+         
+        
+        
         Variance = accounts_balance - previous_balance
-            
+        print(month_title,Variance,accounts_balance,previous_balance)  
 
         account__balance_list.append({"label": month_title, "y": round(Variance,2)} )    
     account__balance_list.append({"label": "Net Balance", "isCumulativeSum": True} ) 

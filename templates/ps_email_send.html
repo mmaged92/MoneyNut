@@ -1,0 +1,44 @@
+{%  extends "layout.html" %}
+
+{% block title %}transaction View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class = 'card-reset-password'>
+    <div class='row'>
+        <div class = 'col-12'>
+            <h>Password Reset </h>      
+        </div>
+    <div class='row'>
+        <div class = 'col-12'>
+            <p> Forgot your password? Enter your email address, and we will email instructions for setting a new password.</p>
+        </div>
+    </div>
+    <div class='row'>
+        <div class = 'col-12'>
+            <form method="post">
+
+                {% csrf_token%}
+                {{form}}
+                <div class = 'col-12' style="padding-top:10px; padding-bottom: 10px">
+                    <input type = 'submit' name="Send email" class="btn btn-success  w-10">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+
+{% endblock %}

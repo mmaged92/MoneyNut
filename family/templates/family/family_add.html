@@ -1,0 +1,48 @@
+{%  extends "layout.html" %}
+
+{% block title %}Family{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class = 'family-invitation'>
+    <div class='row'>
+        <div class = 'col-12'>
+            <h>Add Family memeber</h>      
+        </div>
+    <div class='row'>
+        <div class = 'col-12'  style="padding-top:20px;">
+            <p>If you’ve already been invited or have a token, please enter it here to access and view each other’s budgets.</p>
+        </div>
+    </div>
+    <form action ={% url 'add_family'%} method ='post' enctype="multipart/form-data"> 
+        <div class='row'>
+            <div class = 'col-12'>
+                    {% csrf_token%}
+                    <div class = 'col-12' style="padding-top:20px; padding-bottom: 10px">
+                        <input type = 'text' style = "width: 50%;" name="token" placeholder="Enter Token">
+                    </div>
+                
+            </div>
+        </div>
+        <div class='row'>
+            <div class = 'col-12'>
+                <button type='submit' class = "btn btn-success w-20">Add Family Memeber</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+    
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{%  extends "layout.html" %}
+
+{% block title %}Monthly Expense View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<span class="loader"></span>
+{% comment %} <div class ='main-content'> {% endcomment %}
+    <div class='row card-container'>
+        <div class = 'col-12'>
+            <div class = 'card-tv-1'>
+                <p class="heading " >Mounthly View </p>
+                <div class="container justify-content-md-center">
+                    <form action = {% url 'monthly_view_family'%} method = 'post'>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-2">
+                                <label> Year</label>
+                            </div>
+                            <div class="col-2">
+                                <select name = 'year' style="width: 100%;">
+                                    <option value = ''>--select year--</option>
+                                    {% for year in years%}
+                                        <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <label> Select Month </label>
+                            </div>
+
+                            <div class="col-2">
+                                <select name = 'month' style="width: 100%;">
+                                    <option value = ''>--select Month--</option>
+                                    {% for month in months%}
+                                        <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>{{ month }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <button type='submit' class="btn btn-success btn-sm" style="width: 100%;" > Get <i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='row card-container'>
+        <div class = 'col-12'>
+            <div class = 'card-mv-1'>
+                <div>
+                    <div id="myGridmonthlyview" style="height: 500px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='row card-container'>
+        <div class = 'col-6'>
+            <div class = 'card-mv-2'>
+                <div class = 'container-monthly-view'>
+                        <div id="chartContainer" style="height: 100%; width: 90%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class = 'col-6'>
+            <div class = 'card-mv-2'>
+                <div class = 'container-monthly-view'>
+                    
+                        <div id="chartContainerbar" style="height:100%; width: 90%;"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='row card-container'>
+        <div class = 'col-12'>
+            <div class = 'card-mv-2'>
+                <div class="container justify-content-md-center">
+                    <div class="row">
+                        <div class="col-2">
+                            <label> Select Category to view</label>
+                        </div>
+                        <div class="col-4">
+                            <select id = 'categoryselector'  style="width: 100%;">
+                                {% for category in categories%}
+                                    <option value="{{ category}}" {% if category == selected_category %}selected{% endif %}> {{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </div>
+                <div class="container justify-content-md-center">
+                    <div id="chartContainerbardaily" style="height: 370px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='row card-container'>
+        <div class = 'col-4'>
+            <div class = 'card-mv-2'>
+                <div class = 'container-monthly-view'> 
+                    <div id="chartspentVSTarget" style="height: 100%; width: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class = 'col-4'>
+            <div class = 'card-mv-2'>
+                <div class = 'container-monthly-view'> 
+                    <div id="chartIncomeVSSpent" style="height: 100%; width: 400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class = 'col-4'>
+            <div class = 'card-mv-2'>
+                    <div id="chartSavingVSTargetSaving" style="height: 100%; width: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class='row card-container'>
+        <div class = 'col-12'>
+            <div class = 'card-mv-2'>
+                <div id="chartContainerBalance" style="height: 370px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+{% comment %} </div> {% endcomment %}
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/monthly_family.js' %}" defer></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{% endblock %}    
+
+

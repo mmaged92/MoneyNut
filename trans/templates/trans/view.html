@@ -1,0 +1,34 @@
+
+{%  extends "layout.html" %}
+
+{% block title %}transaction View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-trans'>
+
+            <div class="d-flex align-items-center">
+                <h1 class="heading mb-0 me-2">Transaction List</h1>
+                <i class="fa-solid fa-trash" id = 'deletealltransview'></i>
+                {% comment %} <i class="fa-solid fa-arrows-rotate" id='reloadpage'></i> {% endcomment %}
+                {% comment %} <button onclick="exportGridData()">Export to Excel</button> {% endcomment %}
+            </div>
+            <div id="myGridtransview" style="height: 1080px"></div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/view.js' %}" defer></script>
+
+{% endblock %}

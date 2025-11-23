@@ -1,0 +1,48 @@
+{%  extends "layout.html" %}
+
+{% block title %}Family{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class = 'family-invitation'>
+    <div class='row'>
+        <div class = 'col-12'>
+            <h>Add Family memeber</h>      
+        </div>
+    <div class='row'>
+        <div class = 'col-12'  style="padding-top:20px;">
+            <p>Invite your family members to join! Simply enter their email address below, and we’ll send them an invitation to join and stay connected with the family group.</p>
+        </div>
+    </div>
+    <form action ={% url 'family_invite'%} method ='post' enctype="multipart/form-data"> 
+        <div class='row'>
+            <div class = 'col-12'>
+                    {% csrf_token%}
+                    <div class = 'col-12' style="padding-top:20px; padding-bottom: 10px">
+                        <input type = 'text' style = "width: 50%;" name="Send_invite" placeholder="example@email.com">
+                    </div>
+                
+            </div>
+        </div>
+        <div class='row'>
+            <div class = 'col-12'>
+                <button type='submit' class = "btn btn-success w-20">Send invitation</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+    
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+
+{% endblock %}

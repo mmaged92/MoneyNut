@@ -1,0 +1,24 @@
+{%  extends "layout.html" %}
+
+{% block title %}Account View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-account-2'>
+            <div class="d-flex align-items-center"> <p class="heading mb-0 me-2">My Accounts</h1></div>
+                <div id="myGridaccounts" style="height: 730px"></div>
+        </div>
+    </div>
+</div>
+
+                
+{% endblock %}
+
+{% block extra_scripts %}
+{% load static %}
+<script src="{% static 'js/accounts_view.js' %}" defer></script>
+{% endblock %}

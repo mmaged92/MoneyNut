@@ -1,0 +1,39 @@
+{%  extends "layout.html" %}
+
+{% block title %}transaction View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class = 'card-reset-password'>
+    <div class='row'>
+        <div class = 'col-12'>
+            <h>Password Reset Complete</h>      
+        </div>
+    <div class='row'>
+        <div class = 'col-12'>
+            <p> your password ha been set. You may fo ahead and log in.</p>
+        </div>
+    </div>
+    <div class='row'>
+        <div class = 'col-12'>
+            <div class = 'col-12' style="padding-top:10px; padding-bottom: 10px">
+                <a href="{% url 'loginpage' %}" class="btn btn-success w-10" >Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+
+{% endblock %}

@@ -1,0 +1,85 @@
+
+{%  extends "layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+
+<span class="loader"></span>
+<div class="container">
+    <div class="row my-header-row">
+        <div class="col-md w-100 p-3">
+            <h1 class="heading" >{{month}} Overview </h1>
+        </div>
+        <div class="col-md w-100 p-3">
+            <h1 class="heading user" > Hello {{user_name}} </h1>
+        </div>
+        <div class="col-md w-100 p-3">
+            <h1 class="heading date" > {{displayDate}}</h1>
+        </div>
+    </div>
+    <div class="row my-custom-row">
+        <div class="col-md card-container">
+            <div class='card'>
+                <label>Total Spent</label>
+                <div class='amount' id='total-spent'> </div>
+            </div>
+        </div>
+        <div class="col-md card-container">
+            <div class='card'>
+                <label>Current Accounts Balance</label>
+                <div class='amount' id='current-balance'>  </div>
+            </div>
+        </div>
+        <div class="col-md card-container">
+            <div class='card'>
+                <label>Total Fixed Fees Remaining</label>
+                <div class='amount' id='fixed-fees-remaining'> </div>
+            </div>
+        </div>
+        <div class="col-md card-container">
+            <div class='card'>
+                <label>Over All budget Status</label>
+                <div class='amount' id='budget-status'></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row my-chart-row">
+        <div class="col-8 card-container">
+            <div class='card chart'>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
+        </div>
+        <div class="col-4 card-container">
+            <div class='card chart'>
+                <div id="chartContainerPie" style="height: 370px; width: 100%;"></div>
+            </div>
+        </div>    
+    </div>
+    <div class="row my-chart-row">
+        <div class="col-7 card-container">
+            <div class='card chart'>
+                <div id="myGrid" style="height: 500px"></div>
+            </div>
+        </div>
+        <div class="col-5 card-container">
+            <div class='card chart' style="height: 540px; overflow-y: auto;">
+                <div id="chartContainerBar" style="height: 500px; width: 100%;"></div>
+            </div>
+        </div>    
+    </div>
+        
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/dashboard.js' %}" defer></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{% endblock %}

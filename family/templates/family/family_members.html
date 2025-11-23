@@ -1,0 +1,31 @@
+
+{%  extends "layout.html" %}
+
+{% block title %}family members{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-trans'>
+
+            <div class="d-flex align-items-center">
+                <h1 class="heading mb-0 me-2">Family members</h1>
+            </div>
+            <div id="myGridFamily" style="height: 1080px"></div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/family_members.js' %}" defer></script>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+
+{%  extends "layout.html" %}
+
+{% block title %}family transaction View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-trans'>
+
+            <div class="d-flex align-items-center">
+                <h1 class="heading mb-0 me-2">Family Transaction List</h1>
+            </div>
+            <div id="myGridtransview" style="height: 1080px"></div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/trans_family.js' %}" defer></script>
+
+{% endblock %}

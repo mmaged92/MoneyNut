@@ -1,0 +1,81 @@
+{%  extends "layout.html" %}
+
+{% block title %}transaction View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<p class="heading " >Savings Tagret</p>
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-st-1'>
+            <div class="container justify-content-md-center">
+                <form action ={% url 'saving_monthly_target'%} method ='post'> 
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-2">
+                            <label>frequency</label>
+                        </div>
+                        <div class="col-4">  
+                            <select id = "id_frequency" name="frequency" style="width:100%" required>
+                                {%for freq in frequency %}   
+                                <option value={{freq}}>{{freq}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label>Start Date</label>
+                        </div>
+                        <div class="col-4">
+                            <input type='date'name="date_start" style="width:100%" required>
+                        </div>
+                        <div class="col-2">
+                            <label>End Date</label>
+                        </div>
+                        <div class="col-4">
+                            <input type='date'name="date_end" style="width:100%" required>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label>Saving Target</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="number" name='amount' style="width:100%">
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center" style="padding-top: 10px">
+                        <div class = "col-2 justify-content-md-center">
+                            <button type='submit' class = "btn btn-success">Enter New Saving Target</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-st-2'>
+            <div class="d-flex align-items-center"> <p class="heading mb-0 me-2">Saving Targets</h1><i class="fa-solid fa-trash" id = 'deletealltarget'></i></div>
+                <div id="myGridtsavingtargets" style="height: 780px"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/saving.js' %}" defer></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{% endblock %}

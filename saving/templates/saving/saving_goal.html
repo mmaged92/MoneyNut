@@ -1,0 +1,78 @@
+{%  extends "layout.html" %}
+
+{% block title %}Saving Goal{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-sg-1'>
+            <p class="heading " >Set Saving Goal</p>
+
+            <div class="container justify-content-md-center">
+                <form action ={% url 'goal_view'%} method ='post'> 
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-2">
+                            <label>Goal Name</label>
+                        </div>
+                        <div class="col-2">  
+                            <input type="text" name='goal_name' style="width:100%" required>
+                        </div>
+                        <div class="col-2">
+                            <label>Goal amount</label>
+                        </div>
+                        <div class="col-2">
+                            <input type='number'name="goal_amount" style="width:100%" required>
+                        </div>
+                        <div class="col-2">
+                            <label>Due Date</label>
+                        </div>
+                        <div class="col-2">
+                            <input type='date'name="due_date" style="width:100% " required>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center" style="padding-top: 10px">
+                        <div class="col-2">
+                            <label>Set Saving in Account</label>
+                        </div>
+                        <div class="col-2">
+                            <select name='account_name' style="width:100%" required>
+                                <option value=''>--Select Account--</option>
+                                {%for account in accounts%}
+                                    <option {{account.account_name}}> {{account.account_name}}</option>
+                                    {%endfor%}
+                            </select>
+                        </div>                       
+                        <div class = "col-2">
+                            <button type='submit' class = "btn btn-success">Set Goal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-sg-2'>
+            <div class="d-flex align-items-center"> <p class="heading mb-0 me-2">Goals View</h1><i class="fa-solid fa-trash" id = 'deleteallgoals'></i></div>
+                <div id="myGridtsavingGoal" style="height: 780px"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/saving_goal.js' %}" defer></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{% endblock %}

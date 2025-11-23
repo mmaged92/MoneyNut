@@ -1,0 +1,69 @@
+
+{%  extends "layout.html" %}
+
+{% block title %}Annual Target View{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<span class="loader"></span>
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-tv-1'>
+            <p class="heading " >Annual Target View </p>
+
+            <div class="container justify-content-md-center">
+                <form action = {% url 'annual_target_view_family'%} method = 'post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-2">
+                            <label> Year</label>
+                        </div>
+                        <div class="col-2">
+                            <select name = 'year' style="width: 100%;">
+                                <option value = ''>--select year--</option>
+                                {% for year in years%}
+                                    <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button type='submit' class="btn btn-success btn-sm" style="width: 100%;" > Get <i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-tv-2'>
+            <div>
+                <div id="myGridannualview" style="height: 780px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='row card-container'>
+    <div class = 'col-12'>
+        <div class = 'card-tv-3'>
+            <div>
+                <div id="chartTargetvsIncomevsSaving" style="height: 500px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% load static %}  
+<script src="{% static 'js/annually_family.js' %}" defer></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+{% endblock %}
