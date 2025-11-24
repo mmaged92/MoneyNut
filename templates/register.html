@@ -34,10 +34,10 @@
                         {{ form.last_name|add_class:"form-control form-control-lg"|attr:"placeholder:Last Name" }}   
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
+                    {% comment %} <div data-mdb-input-init class="form-outline mb-4">
                         {%  csrf_token %}
                         <input name = 'Date_of_birth' class = "form-control form-control-lg"  type ='date'> 
-                    </div>
+                    </div> {% endcomment %}
 
                     <div data-mdb-input-init class="form-outline mb-4">
                         {%  csrf_token %}

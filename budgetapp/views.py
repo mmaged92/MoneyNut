@@ -37,8 +37,8 @@ def register(request):
         if form.is_valid():
             login(request, form.save())
             user = request.user
-            date = request.POST.get('Date_of_birth')
-            UserProfile.objects.create(user_id=user, Birth_date=date)
+            # date = request.POST.get('Date_of_birth')
+            # UserProfile.objects.create(user_id=user, Birth_date=date)
             user = form.cleaned_data.get('username')
             messages.success(request, " Account was created for " + user)
         
