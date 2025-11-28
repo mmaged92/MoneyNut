@@ -15,30 +15,30 @@
                 <form action ={% url 'goal_view'%} method ='post'> 
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Goal Name</label>
                         </div>
-                        <div class="col-2">  
+                        <div class="col-lg-2 col-md-6">  
                             <input type="text" name='goal_name' style="width:100%" required>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Goal amount</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <input type='number'name="goal_amount" style="width:100%" required>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Due Date</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <input type='date'name="due_date" style="width:100% " required>
                         </div>
                     </div>
                     <div class="row justify-content-md-center" style="padding-top: 10px">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Set Saving in Account</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <select name='account_name' style="width:100%" required>
                                 <option value=''>--Select Account--</option>
                                 {%for account in accounts%}
@@ -46,7 +46,7 @@
                                     {%endfor%}
                             </select>
                         </div>                       
-                        <div class = "col-2">
+                        <div class = "col-lg-2 col-md-12">
                             <button type='submit' class = "btn btn-success">Set Goal</button>
                         </div>
                     </div>

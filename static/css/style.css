@@ -4,13 +4,11 @@ body{
 	border: none;
 	font-family: MV Boli;
 	background-color: #000;
-	padding-top: 75px;
 
 }
 
 #container {
     display: flex;
-    height: 100vh; /* full viewport height */
   }
 p{
 	font-family: MV Boli;
@@ -72,8 +70,10 @@ h{
 .heading{
     font-family: MV Boli;
     font-weight: bold;
-	font-size: 1.5em;
-	margin-bottom: 5px;
+	  font-size: 1.5rem;
+	  margin-bottom: 5px;
+    text-align: center;
+    padding-top: 10px;
 }
 
 label{
@@ -325,14 +325,8 @@ a.btn-toggle:hover {
   display: none;
 }
 
-.my-custom-row{
-  height: 200px;
-  padding: 20px;
-}
 
-.my-header-row{
-  height: 50px;
-}
+
 
 .card-container{
     padding: 16px 16px;
@@ -374,17 +368,11 @@ a.btn-toggle:hover {
   margin: 0 0 0 0;
 }
 
-.my-chart-row{
-  height: 450px;
-}
-
 .card-category {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 250px;
-
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -396,7 +384,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 850px;
 }
 
 #reloadpage {
@@ -410,7 +397,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 330px;
 
 }
 .card-trans-2 {
@@ -418,7 +404,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 250px;
 
 }
 
@@ -432,7 +417,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 210px;
 
 }
 .card-target-2 {
@@ -440,7 +424,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 900px;
 
 }
 .card-keyword-1 {
@@ -448,7 +431,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 150px;
 
 }
 .card-keyword-2 {
@@ -456,7 +438,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 900px;
 
 }
 
@@ -465,7 +446,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 150px;
 
 }
 .card-bank-2 {
@@ -473,7 +453,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 800px;
 
 }
 .card-trans {
@@ -490,7 +469,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 250px;
 
 }
 .card-account-2 {
@@ -498,7 +476,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 800px;
 
 }
 .card-st-1 {
@@ -506,7 +483,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 200px;
 
 }
 .card-st-2 {
@@ -514,7 +490,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 850px;
 
 }
 
@@ -523,7 +498,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 230px;
 
 }
 .card-income-2 {
@@ -531,7 +505,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 850px;
 
 }
 
@@ -540,7 +513,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 150px;
 
 }
 .card-sg-2 {
@@ -557,7 +529,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 100px;
 
 }
 .card-tv-2 {
@@ -565,7 +536,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 850px;
 
 }
 
@@ -582,8 +552,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 530px;
-
 }
 
 .card-av-all {
@@ -602,7 +570,6 @@ a.btn-toggle:hover {
   position: relative;
   height: 600px;
   align-content: center;
-
 }
 .card-profile {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -650,7 +617,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 550px;
 
 }
 
@@ -672,7 +638,6 @@ a.btn-toggle:hover {
   margin-top: 20px;
   margin-right: 10px;
   position: relative;
-  height: 100px;
   align-content: center;
 
 }
@@ -687,3 +652,4 @@ a.btn-toggle:hover {
   align-content: center;
   height: 340px;
 }
+

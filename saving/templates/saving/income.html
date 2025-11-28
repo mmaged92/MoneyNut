@@ -16,10 +16,10 @@
                 <form action ={% url 'income_view'%} method ='post'> 
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>frequency</label>
                         </div>
-                        <div class="col-4">  
+                        <div class="col-lg-4 col-md-6">  
                             <select id = "id_frequency" name="frequency" style="width:100%" required>
                                 {%for freq in frequency %}
                                     <option value="{{freq}}">{{freq}}</option>
@@ -29,25 +29,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Start Date</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date'name="date_start" style="width:100%" required>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>End Date</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date'name="date_end" style="width:100%" required>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Income Amount</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type="number" name='amount' style="width:100%" required>
                         </div>
                     </div>

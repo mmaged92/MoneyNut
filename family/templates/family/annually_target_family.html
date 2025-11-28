@@ -17,10 +17,10 @@
                 <form action = {% url 'annual_target_view_family'%} method = 'post'>
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label> Year</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <select name = 'year' style="width: 100%;">
                                 <option value = ''>--select year--</option>
                                 {% for year in years%}
@@ -28,7 +28,7 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-12">
                             <button type='submit' class="btn btn-success btn-sm" style="width: 100%;" > Get <i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>

@@ -14,10 +14,10 @@
                 <form action ={% url 'add_account'%} method = 'post' enctype="multipart/form-data">
                     {%  csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label> Select Bank </label>
                         </div>
-                        <div class="col-4">      
+                        <div class="col-lg-4 col-md-6">      
                             <select name='Bank_name' style="width:100%" required>
                                 <option value=''>--Select Bank Account--</option>
                                 {%for Bank in Banks %}
@@ -25,10 +25,10 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label> Enter Account Type </label>
                         </div>
-                        <div class="col-4" >
+                        <div class="col-lg-4 col-md-6" >
                             <select id = 'account_type' name='account_type' style="width:100%" required>
                                 <option value=''>--Credit/Chequing/Saving-</option>
                                 {%for account in accounts %}
@@ -38,10 +38,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Account Name</label>
                         </div>    
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type-'text' name = 'account_name' style="width:100%" required>
                         </div>
                         <div id = 'account_number_l'  class="col-2" >
@@ -52,16 +52,16 @@
                         </div>
                     </div>
                     <div class="row" id = 'account_balance_date' style="padding-top: 5px">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Account Starting Balance</label>
                         </div>    
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='number' name = 'account_balance' style="width:100%">
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Date Starting Balance</label>
                         </div>    
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date' name = 'account_balance_date' style="width:100%">
                         </div>
                     </div>

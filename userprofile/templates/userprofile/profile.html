@@ -40,21 +40,15 @@
                 </div>
             </div>
             <div class='row'>
-                <div class = 'col-4'>
-                    <label> Date of Birth</label>
-                </div>
-                <div class = 'col-4'>
+                <div class = 'col-6'>
                     <label> Marital status</label>
                 </div>
-                <div class = 'col-4'>
+                <div class = 'col-6'>
                     <label> Gender</label>
                 </div>
             </div>
             <div class='row'>
-                <div class = 'col-4'>
-                    <input id = 'BD' type="text" style="width: 100%;" value="{{DateofBirth}}">
-                </div>
-                <div class = 'col-4'>
+                <div class = 'col-6'>
                     <select id = 'MS' style="width: 100%; height: 100%;" >
                         <option value = ""> {{material_status}} </option>
                         {% for status in material_status_list %}
@@ -62,7 +56,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class = 'col-4'>
+                <div class = 'col-6'>
                     <select id = 'GENDER' style="width: 100%; height: 100%;" >
                         <option value = ""> {{Gender}} </option>
                         {% for gender in gender_list %}

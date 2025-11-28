@@ -8,16 +8,15 @@
 {% block content %}
 <p class="heading " >Savings Tagret</p>
 <div class='row card-container'>
-    <div class = 'col-12'>
-        <div class = 'card-st-1'>
+    <div class = 'col-12 card-st-1'>
             <div class="container justify-content-md-center">
                 <form action ={% url 'saving_monthly_target'%} method ='post'> 
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>frequency</label>
                         </div>
-                        <div class="col-4">  
+                        <div class="col-lg-4 col-md-6">  
                             <select id = "id_frequency" name="frequency" style="width:100%" required>
                                 {%for freq in frequency %}   
                                 <option value={{freq}}>{{freq}}</option>
@@ -26,35 +25,34 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Start Date</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date'name="date_start" style="width:100%" required>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>End Date</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date'name="date_end" style="width:100%" required>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-6">
                             <label>Saving Target</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <input type="number" name='amount' style="width:100%">
                         </div>
                     </div>
                     <div class="row justify-content-md-center" style="padding-top: 10px">
-                        <div class = "col-2 justify-content-md-center">
+                        <div class = "col-12 justify-content-md-center">
                             <button type='submit' class = "btn btn-success">Enter New Saving Target</button>
                         </div>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
 </div>

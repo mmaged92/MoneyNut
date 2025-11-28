@@ -16,10 +16,10 @@
                     <form action = {% url 'monthly_view'%} method = 'post'>
                         {% csrf_token %}
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <label> Year</label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <select name = 'year' style="width: 100%;">
                                     <option value = ''>--select year--</option>
                                     {% for year in years%}
@@ -31,7 +31,7 @@
                                 <label> Select Month </label>
                             </div>
 
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <select name = 'month' style="width: 100%;">
                                     <option value = ''>--select Month--</option>
                                     {% for month in months%}
@@ -39,7 +39,7 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-12">
                                 <button type='submit' class="btn btn-success btn-sm" style="width: 100%;" > Get <i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </div>
@@ -49,37 +49,30 @@
         </div>
     </div>
     <div class='row card-container'>
-        <div class = 'col-12'>
-            <div class = 'card-mv-1'>
+        <div class = 'col-12 card-mv-1'>
                 <div>
                     <div id="myGridmonthlyview" style="height: 500px; width: 100%;"></div>
                 </div>
-            </div>
         </div>
     </div>
 
     <div class='row card-container'>
-        <div class = 'col-6'>
-            <div class = 'card-mv-2'>
+        <div class = 'col-lg-6 col-md-12 card-mv-2'>
                 <div class = 'container-monthly-view'>
-                        <div id="chartContainer" style="height: 100%; width: 90%;"></div>
+                        <div id="chartContainer" style="height: 100%; width: 90%; align-self: center; overflow: hidden;"></div>
                 </div>
-            </div>
         </div>
-        <div class = 'col-6'>
-            <div class = 'card-mv-2'>
+        <div class = 'col-lg-6 col-md-12 card-mv-2'>
                 <div class = 'container-monthly-view'>
                     
-                        <div id="chartContainerbar" style="height:100%; width: 90%;"></div>
+                        <div id="chartContainerbar" style="height:100%; width: 90%; align-self: center; overflow: hidden;"></div>
                     
                 </div>
-            </div>
         </div>
     </div>
 
     <div class='row card-container'>
-        <div class = 'col-12'>
-            <div class = 'card-mv-2'>
+        <div class = 'col-12 card-mv-2'>
                 <div class="container justify-content-md-center">
                     <div class="row">
                         <div class="col-2">
@@ -94,37 +87,30 @@
                         </div>
                 </div>
                 <div class="container justify-content-md-center">
-                    <div id="chartContainerbardaily" style="height: 370px; width: 100%;"></div>
+                    <div id="chartContainerbardaily" style="height: 30vh; width: 100%; overflow: hidden;"></div>
                 </div>
-            </div>
         </div>
     </div>
 
     <div class='row card-container'>
-        <div class = 'col-4'>
-            <div class = 'card-mv-2'>
-                <div class = 'container-monthly-view'> 
-                    <div id="chartspentVSTarget" style="height: 100%; width: 400px;"></div>
+        <div class = 'col-lg-4 col-md-12 card-mv-2'>
+               <div class = 'container-monthly-view'> 
+                    <div id="chartspentVSTarget" style="height: 30vh; width: 100%; overflow: hidden;"></div>
                 </div>
-            </div>
         </div>
-        <div class = 'col-4'>
-            <div class = 'card-mv-2'>
+        <div class = 'col-lg-4 col-md-12 card-mv-2'>
                 <div class = 'container-monthly-view'> 
-                    <div id="chartIncomeVSSpent" style="height: 100%; width: 400px;"></div>
+                    <div id="chartIncomeVSSpent" style="height: 30vh; width: 100%; overflow: hidden;"></div>
                 </div>
-            </div>
         </div>
-        <div class = 'col-4'>
-            <div class = 'card-mv-2'>
-                    <div id="chartSavingVSTargetSaving" style="height: 100%; width: 400px;"></div>
-            </div>
+        <div class = 'col-lg-4 col-md-12 card-mv-2'>
+            <div id="chartSavingVSTargetSaving" style="height: 30vh; width: 100%; overflow: hidden;"></div>
         </div>
     </div>
     <div class='row card-container'>
         <div class = 'col-12'>
             <div class = 'card-mv-2'>
-                <div id="chartContainerBalance" style="height: 370px; width: 100%;"></div>
+                <div id="chartContainerBalance" style="height: 30vh; width: 100%; overflow: hidden;"></div>
             </div>
         </div>
     </div>

@@ -244,7 +244,6 @@ def user_update(request):
         data = json.loads(request.body)
         first_name_data = data.get('first_name_data')
         last_name_data = data.get('last_name_data')
-        Birth_date = data.get('BD')
         Marital_Status = data.get('MS')
         gender = data.get('GENDER')
         job_title = data.get('JT')
@@ -279,11 +278,6 @@ def user_update(request):
                 update_value = User.objects.get(username=username)
                 update_value.set_password("change_password")
                 update_value.save()
-
-        if Birth_date:
-            update_value = UserProfile.objects.get(user_id=user)
-            update_value.Birth_date = Birth_date
-            update_value.save()
 
         if Marital_Status:
             update_value = UserProfile.objects.get(user_id=user)

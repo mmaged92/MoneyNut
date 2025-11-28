@@ -70,6 +70,7 @@ async function initGrid() {
     fetchTotalBalance();
     fetchTotalremaining();
     fetchStatus();
+    
     const Spent_data = await fetchSpent();
     const Spent_Pie = await fetchSpentPercentage();
 
@@ -78,6 +79,7 @@ async function initGrid() {
 
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
+        responsive: true,
         theme: "light2",
         title: {
             text: "Total Spent"
@@ -119,6 +121,7 @@ async function initGrid() {
 
     var chartPie = new CanvasJS.Chart("chartContainerPie", {
         animationEnabled: true,
+        responsive: true,
         title: {
             text: "Spent/Category",
             horizontalAlign: "left"
@@ -137,6 +140,7 @@ async function initGrid() {
 
     var chartbar = new CanvasJS.Chart("chartContainerBar", {
         animationEnabled: true,
+        responsive: true,
         theme: "light2", //"light1", "dark1", "dark2"
         title: {
             text: "Spent Vs Target",
@@ -222,3 +226,8 @@ window.addEventListener('load', function () {
 });
 
 
+window.addEventListener("resize", function () {
+    if (chart) chart.render();
+    if (chartPie) chartPie.render();
+    if (chartBar) chartBar.render();
+});

@@ -24,15 +24,15 @@
                     {%  csrf_token %}
                     <input type="hidden" name="input_type" value="file_upload" required>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
-                        <div class="col-6 ">
+                        <div class="col-lg-6 col-md-12">
                             <input class="form-control" type='file' name='file_path' id = 'file_path' accept=".csv">
                         </div>
                     </div>
                     <div class="row justify-content-md-center">
-                    <div class="col-2">
+                    <div class="col-lg-2 col-md-6">
                         <label>Card type</label>
                     </div>
-                    <div class="col-4">  
+                    <div class="col-lg-4 col-md-6">  
                         <select id = 'card_type' name='card_type'style="width: 100%;" required> 
                             <option value=''>--Debit/Credit--</option>
                             {%for card_type in card_types %}
@@ -42,10 +42,10 @@
                     </div>
                     </div>
                     <div class="row justify-content-md-center">
-                    <div class="col-2">
+                    <div class="col-lg-2 col-md-6">
                         <label> Account</label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-6">
                         <select id  = 'account_name' name ='account_name' style="width: 100%;" required> 
                             <option value=''>--Select Account--</option>
                             {%for account_name in account_names %}
@@ -58,22 +58,22 @@
                         <label style="text-align: center;">File Mapping</label>
                     </div>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6 ">
                             <label>Enter name of Date Column</label>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6 ">
                             <input id = 'Date_column_name' type='text' name = 'Date_column_name' style="width: 100%;" required>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6 ">
                             <label>Enter name of Description Column</label>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6 ">
                             <input id = 'Description_column_name' type='text' name = 'Description_column_name' style="width: 100%;" required>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Enter name of Date Amount Column</label>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <input id = 'Amount_column_name' type='text' name = 'Amount_column_name' style="width: 100%;" required>
                         </div>
                     </div>   
@@ -100,30 +100,30 @@
                 <form name="single_trans_entry" action={% url 'trans_page'%} method="post" onsubmit="validateFormSE()" enctype="multipart/form-data">
                     {%  csrf_token %}
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Description</label>
                         </div>
-                        <div class="col-4 ">
+                        <div class="col-lg-4 col-md-6">
                             <input type='text' name = 'description' id = 'desc' style="width: 100%;" required>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Date</label>
                         </div>
-                        <div class="col-4 ">
+                        <div class="col-lg-4 col-md-6">
                             <input type='date' name = 'date' id = 'date' style="width: 100%;" required>
                         </div>
                     </div>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Amount</label>
                         </div>
-                        <div class="col-4 ">
+                        <div class="col-lg-4 col-md-6">
                             <input type='number' step="0.01" name = 'amount' id = 'amount' style="width: 100%;" required>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label> Type </label>
                         </div>
-                        <div class="col-4 ">
+                        <div class="col-lg-4 col-md-6">
                             <select name='IO' id = 'IO' amountstyle="width: 100%;" required>
                                 <option value=''>--income/expense--</option>
                                 {%for io in ios %}
@@ -133,10 +133,10 @@
                         </div>
                     </div>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Category</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <select id = 'category' name='category' style="width: 100%;" required>
                                 <option value=''>--Select Category--</option>
                                 {%for category in categories %}
@@ -144,10 +144,10 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-lg-2 col-md-6">
                             <label>Account</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-6">
                             <select id = 'account_name_se' name ='account_name_se' style="width: 100%;" required>
                                 <option value=''>--Select Account Name--</option>
                                 {%for account_name in account_names %}

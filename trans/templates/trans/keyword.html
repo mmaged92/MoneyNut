@@ -15,10 +15,10 @@
 
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-12">
                             <label> Category Name</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-12">
                             <select name = 'category_id' style="width: 100%;" required>
                                 <option value = ''>--select category--</option>
                                 {% for category in category_list%}
@@ -26,10 +26,10 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-12">
                             <label> add new keyword </label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-12">
                             <input type='text' name='new_keyword' style="width: 100%;" required>
                         </div>
                     </div>

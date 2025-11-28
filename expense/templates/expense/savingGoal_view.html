@@ -11,10 +11,10 @@
 {% comment %} <span class="loader"></span> {% endcomment %}
     <div class='card-saving '>
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-md-12">
                 <h1 class="heading" >Saving Goals: {{Goal_name}}</h1>
             </div>
-            <div class="col-8">
+            <div class="col-lg-8 col-md-12">
                 <form action={% url 'Saving_goal'%} method="post" enctype="multipart/form-data"  >
                     {% csrf_token %}
                     <select name = 'Saving_goal'style="width: 100%;" onchange="this.form.submit()">
@@ -30,20 +30,20 @@
     </div>
     
     <div class="row">
-        <div class="col-4">
+        <div class="col-lg-4 col-md-6 col-xs-12">
             <div class='card-saving '>
                 <label>Today</label>
                 <div class='amount'>{{today_date}}</div>
             </div>
         </div>
             
-            <div class="col-4">
+            <div class="col-lg-4 col-md-6 col-xs-12">
                 <div class='card-saving '>
                     <label>Saving Due Date</label>
                     <div class='amount'>{{duedate}}</div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-md-6 col-xs-12">
                 <div class='card-saving '>
                     <label>Status</label>
                     <div class='amount'>{{status}}</div>                    
@@ -51,7 +51,7 @@
             </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-lg-4 col-md-6">
             <div class='card-saving'>
                <div class="col-12">
                     <label>Target</label>
@@ -71,7 +71,7 @@
                </div> 
             </div>
         </div>       
-        <div class="col-8">
+        <div class="col-lg-8 col-md-6">
             <div class='card-saving-3 '>
                 <div id="chartContainer" style="height: 320px; width: 100%;"></div>
             </div>

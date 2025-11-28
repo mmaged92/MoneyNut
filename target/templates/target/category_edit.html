@@ -8,23 +8,23 @@
 {% block content %}
 
 <div class='row card-container'>
-    <div class = 'col-6'>
+    <div class = 'col-lg-6 col-md-12'>
         <div class = 'card-category'>
             <p class="heading " >Sub Categories</p>
                 <div class ='row' >
                     <form action={% url 'category_add'%} method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row justify-content-md-center">
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <label>Category Name</label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <input type="text" name='category' style="width: 100%";>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <label>Main Category</label>
                             </div>
-                            <div class="col-4">
+                            <div class="col-lg-4 col-md-6">
                                 <Select name='main_category' style="width: 100%;">
                                     <option value=''> --Select main Category--</option>
                                     {%for category in main_categories%}
@@ -34,10 +34,10 @@
                             </div>  
                         </div> 
                         <div class="row justify-content-md-center">
-                            <div class="col-2 ">
+                            <div class="col-lg-2 col-md-6 ">
                                 <label>Is fixed fees?</label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-md-6">
                                 <input type="checkbox" name='fixed_fees'>
                             </div>   
                         </div>
@@ -48,7 +48,7 @@
                 </div>
         </div>
     </div>
-    <div class = 'col-6'>
+    <div class = 'col-lg-6 col-md-12'>
         <div class = 'card-category'>
             <p class="heading " >Main Categories</p>  
             <div class="row justify-content-md-center">
@@ -59,20 +59,20 @@
                     <input type="text" id ='main-category-value'>
                 </div>
             </div>
-            <div class="text-center" style="padding-top:60px">
+            <div class="text-center" style="padding-top:40px">
                 <button type = 'submit' class="btn btn-success" id="sendButton">Enter New Main category</button>
             </div>
         </div>
     </div>
 </div>
 <div class='row card-container'>
-   <div class = 'col-6'> 
+   <div class = 'col-lg-6 col-md-12'> 
         <div class="card-table">
             <div class="d-flex align-items-center"> <p class="heading mb-0 me-2">My Sub Categories</P> <i class="fa-solid fa-trash" id = 'deleteallcategory'></i></div>
             <div id="myGridcategories" style="height: 790px"></div>
         </div>
    </div>
-   <div class = 'col-6'> 
+   <div class = 'col-lg-6 col-md-12'> 
         <div class="card-table">
             <div class="d-flex align-items-center"> <p class="heading mb-0 me-2">My Main Categories</P> <i class="fa-solid fa-trash" id = 'deleteallmaincategory'></i></div>
             <div id="myGridmaincategories" style="height: 790px"></div>

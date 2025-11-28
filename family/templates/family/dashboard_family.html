@@ -10,37 +10,37 @@
 
 <span class="loader"></span>
 <div class="container">
-    <div class="row my-header-row">
-        <div class="col-md w-100 p-3">
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
             <h1 class="heading" >{{month}} Family Overview </h1>
         </div>
-        <div class="col-md w-100 p-3">
-            <h1 class="heading user" > Hello {{user_name}} </h1>
+        <div class="col-lg-4 col-md-4">
+            <h1 class="heading" > Hello {{user_name}} </h1>
         </div>
-        <div class="col-md w-100 p-3">
-            <h1 class="heading date" > {{displayDate}}</h1>
+        <div class="col-lg-4 col-md-4">
+            <h1 class="heading" > {{displayDate}}</h1>
         </div>
     </div>
-    <div class="row my-custom-row">
-        <div class="col-md card-container">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-xs-12 card-container mb-3">
             <div class='card'>
                 <label>Total Spent</label>
                 <div class='amount' id='total-spent-family'> </div>
             </div>
         </div>
-        <div class="col-md card-container">
+        <div class="col-lg-3 col-md-6 col-xs-12 card-container mb-3">
             <div class='card'>
                 <label>Current Accounts Balance</label>
                 <div class='amount' id='current-balance'>  </div>
             </div>
         </div>
-        <div class="col-md card-container">
+        <div class="col-lg-3 col-md-6 col-xs-12 card-container mb-3">
             <div class='card'>
                 <label>Total Fixed Fees Remaining</label>
                 <div class='amount' id='fixed-fees-remaining'> </div>
             </div>
         </div>
-        <div class="col-md card-container">
+        <div class="col-lg-3 col-md-6 col-xs-12 card-container mb-3">
             <div class='card'>
                 <label>Over All budget Status</label>
                 <div class='amount' id='budget-status'></div>
@@ -48,25 +48,25 @@
         </div>
 
     </div>
-    <div class="row my-chart-row">
-        <div class="col-8 card-container">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 card-container mb-3">
             <div class='card chart'>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
             </div>
         </div>
-        <div class="col-4 card-container">
+        <div class="col-lg-4 col-md-12 card-container mb-3">
             <div class='card chart'>
                 <div id="chartContainerPie" style="height: 370px; width: 100%;"></div>
             </div>
         </div>    
     </div>
     <div class="row my-chart-row">
-        <div class="col-7 card-container">
+        <div class="col-lg-7 col-md-12 card-container mb-3">
             <div class='card chart'>
                 <div id="myGrid" style="height: 500px"></div>
             </div>
         </div>
-        <div class="col-5 card-container">
+        <div class="col-lg-5 col-md-12 card-container mb-3">
             <div class='card chart' style="height: 540px; overflow-y: auto;">
                 <div id="chartContainerBar" style="height: 500px; width: 100%;"></div>
             </div>
