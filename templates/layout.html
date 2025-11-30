@@ -134,7 +134,7 @@
           /></a>
           
           <!-- Left links -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% comment %} <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               {% if user.is_authenticated %}
                 <li class="nav-item">
                 <a class="nav-link text-success" href="#">Home</a>
@@ -147,7 +147,7 @@
                 <a class="nav-link text-success" href="#">Contact</a>
                 </li>
               {%endif%}
-            </ul>
+            </ul> {% endcomment %}
             <!-- Left links -->
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
