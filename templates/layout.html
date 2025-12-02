@@ -169,7 +169,7 @@
                   </div>
                 </form>
                 {% else %}
-                <a href="{% url 'loginpage' %}"  data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2 text-success">Login</a> 
+                {% comment %} <a href="{% url 'loginpage' %}"  data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2 text-success">Login</a>  {% endcomment %}
                 {% comment %} {% endif %} {% endcomment %}
 
                 <a href="/register" data-mdb-ripple-init type="button" class="btn btn-primary me-3">Sign up for free</a>
