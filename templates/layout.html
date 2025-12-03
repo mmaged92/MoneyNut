@@ -116,41 +116,38 @@
       <div class="container-fluid m-0">
         <nav class="navbar navbar-expand-lg bg-light">
           <div class="container-fluid">
-            <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" aria-controls="offcanvasExample">
-            <span class="fa fa-bars"></span>
-            </a>
-          
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a href={% url 'dashboard_view' %}>
-                {% else %}
-              <a href="/">
-                {%endif%}
+            <a class="btn " data-bs-toggle="offcanvas" href="#offcanvasExample" aria-controls="offcanvasExample">
+              <span class="fa fa-bars"></span>
+            </div>
+            {%endif%}
+          
+
+          <ul class="navbar-nav d-flex flex-row align-items-center">
+            
+            <li class="nav-item ">
+              
+              {% if user.is_authenticated %}
+                <a class="nav-link p-0 me-2 me-lg-3" href={% url 'dashboard_view' %}>
+              {% else %}
+                <a class="nav-link p-0 me-2 me-lg-3" href="/">
+              {%endif%}
               <img
                   src="/media/logo-nb.png"
-                  height="60"
+                  height="40"
                   alt="Logo"
                   loading="lazy"
-                  style="margin-top: -1px;"
+                  style="d-inline-block align-top"
               /></a>
               </li>
+              {% if not user.is_authenticated %}
+              <li class="nav-item">
+                  <a class="nav-link text-success text-nowrap px-2 px-lg-3" href="{% url 'about' %}">About</a>
+              </li>
+              {%endif%}
           </ul>
           <!-- Left links -->
-            {% comment %} <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              {% if user.is_authenticated %}
-                <li class="nav-item">
-                <a class="nav-link text-success" href="#">Home</a>
-                </li>
-              {%else%}
-                <li class="nav-item">
-                <a class="nav-link text-success" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-success" href="#">Contact</a>
-                </li>
-              {%endif%}
-            </ul> {% endcomment %}
             <!-- Left links -->
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -169,12 +166,9 @@
                   </div>
                 </form>
                 {% else %}
-                {% comment %} <a href="{% url 'loginpage' %}"  data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2 text-success">Login</a>  {% endcomment %}
-                {% comment %} {% endif %} {% endcomment %}
-
-                <a href="/register" data-mdb-ripple-init type="button" class="btn btn-primary me-3">Sign up for free</a>
+                  <a href="/register" data-mdb-ripple-init type="button" class="btn btn-primary w-100 w-md-auto">Sign up for free</a>
                 {%endif%}
-            </div>
+              </div>
           
           </div>
         </nav>

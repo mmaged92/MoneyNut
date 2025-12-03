@@ -60,3 +60,6 @@ def logout_view(request):
      if request.method == "POST":
           logout(request)
           return redirect("loginpage")
+
+def about(request):
+    return render(request, "about.html")
