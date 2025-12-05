@@ -519,7 +519,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 850px;
 
 }
 
@@ -543,7 +542,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 530px;
 
 }
 .card-mv-1 {
@@ -558,7 +556,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 400px;
 
 }
 
@@ -567,7 +564,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 600px;
   align-content: center;
 }
 .card-profile {
@@ -575,7 +571,6 @@ a.btn-toggle:hover {
   transition: 0.3s;
   padding: 20px 16px;
   position: relative;
-  height: 700px;
   align-content: center;
 
 }
@@ -586,7 +581,6 @@ a.btn-toggle:hover {
   padding: 10px 10px 20px 16px;
   margin: 20px 20px 20px 20px;
   position: relative;
-  height: 200px;
   align-content: center;
 
 }
@@ -596,7 +590,6 @@ a.btn-toggle:hover {
   padding: 10px 10px 20px 16px;
   margin: 20px 20px 20px 20px;
   position: relative;
-  height: 400px;
   align-content: center;
 
 }
@@ -606,7 +599,6 @@ a.btn-toggle:hover {
   padding: 10px 10px 20px 16px;
   margin: 20px 20px 20px 20px;
   position: relative;
-  height: 230px;
   align-content: top;
 
 }
