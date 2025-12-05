@@ -74,9 +74,9 @@ def add_account(request):
                 if not account_number:
                     account_number = ""
                 if not Starting_balance:
-                    Starting_balance = ""
+                    Starting_balance = 0
                 if not Starting_balance_date:
-                    Starting_balance_date = ""
+                    Starting_balance_date = datetime.today()
             
             Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date,family_id=family_id)
             return redirect('add_account')        
@@ -86,9 +86,9 @@ def add_account(request):
             Starting_balance_date = request.POST.get('account_balance_date')      
             if not Starting_balance or not Starting_balance_date:
                 if not Starting_balance:
-                    Starting_balance = ""
+                    Starting_balance = 0
                 if not Starting_balance_date:
-                    Starting_balance_date = "" 
+                    Starting_balance_date = datetime.today() 
             account_number = ""
             Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name, Starting_balance=Starting_balance, Starting_balance_date=Starting_balance_date,family_id=family_id)
             return redirect('add_account')        
@@ -96,9 +96,9 @@ def add_account(request):
         if  account_type == 'Credit' or account_type == 'line of credit':    
             account_number = request.POST.get('account_number')
             if not account_number:
-                account_number = ""
-            Starting_balance = ""
-            Starting_balance_date = ""
+                account_number = None
+            Starting_balance = 0
+            Starting_balance_date = None
             Accounts.objects.create(user_id=user,Bank=Bank_id,account_type=account_type,account_name=account_name,account_number=account_number,Starting_balance=Starting_balance,family_id=family_id)
             return redirect('add_account')             
         
