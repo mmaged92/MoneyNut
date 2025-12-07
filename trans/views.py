@@ -35,7 +35,7 @@ def trans_add(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     
     if request.method == "POST":
         input_type = request.POST.get('input_type')
@@ -111,13 +111,13 @@ def trans_add(request):
                         
                         if card_type == 'Credit' and ('thank you' in row[Description_column_name].lower() or 'payment' in row[Description_column_name].lower()):
                             category = 'credit card payment'
-                            category_main = None
+                            category_main = 'credit card payment'
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'credit card payment'
                             print(3, category.categories_name)
                         elif card_type == 'Credit' and amount < 0 and amount_inversed == False:
                             category = 'refund or cashback'
-                            category_main = None
+                            category_main = 'cashback'
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'income'
                             print(4, category.categories_name)
@@ -126,7 +126,7 @@ def trans_add(request):
                             print(5, category.categories_name)
                         elif card_type == 'Credit' and amount > 0 and amount_inversed == True:
                             category = 'refund or cashback'
-                            category_main = None
+                            category_main = 'cashback'
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'income'
                             print(6, category.categories_name)
@@ -136,7 +136,7 @@ def trans_add(request):
                         elif card_type == 'Debit' and ('visa' in row[Description_column_name].lower() or 'mastercard' in row[Description_column_name].lower() or 'neo' in row[Description_column_name].lower() ):
                             IO = 'expense'
                             category = 'credit card payment'
-                            category_main = None
+                            category_main = 'credit card payment'
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             print(8, category.categories_name)
                         elif card_type == 'Debit' and amount < 0 and 'e-transfer' in row[Description_column_name].lower():
@@ -148,19 +148,19 @@ def trans_add(request):
                         elif card_type == 'Debit' and amount > 0 and 'e-transfer' in row[Description_column_name].lower():
                             IO = 'income'
                             category = 'income'
-                            category_main = None
+                            category_main = 'income'
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(10, category.categories_name)
                         elif card_type == 'Debit' and amount < 0 and 'transfer' in row[Description_column_name].lower() and 'e-transfer' not in row[Description_column_name].lower() :
                             IO = 'transfer-out'
                             category = 'transfer'
-                            category_main = None
+                            category_main = 'transfer'
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(11, category.categories_name)
                         elif card_type == 'Debit' and amount > 0 and 'transfer' in row[Description_column_name].lower() and 'e-transfer' not in row[Description_column_name].lower() :
                             IO = 'transfer-in'
                             category = 'transfer'
-                            category_main = None
+                            category_main = 'transfer'
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(12, category.categories_name)
                             
@@ -169,7 +169,7 @@ def trans_add(request):
                         else:
                             IO = 'income'
                             category = 'income'
-                            category_main = None
+                            category_main = 'income'
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                         
                         try:
@@ -205,8 +205,7 @@ def trans_add(request):
             
             try:
                 category = categories_table.objects.get(user_id=user,categories_name=category)
-                category_main = categories_table.objects.get(user_id=user,categories_name=category)
-                category_main = category_main.main_category_id
+                category_main = category.main_category_id
             except Exception:
                 category_name = categories_table.objects.get(user_id=user,categories_name='unassigned')
                 category = category_name
@@ -215,7 +214,7 @@ def trans_add(request):
                 family_id = familyMemebers.objects.get(user_id=user)
                 family_id = family_id.family_id
             else:
-                family_id = ""      
+                family_id = None     
             if not trans.objects.filter(user_id=user, description=description,date=date,amount=amount, category_id = category,main_category_id= category_main,IO = IO, Accounts_id=account_id).exists():
                 trans.objects.create(user_id=user,description=description,date=date,amount=amount, category_id = category,main_category_id= category_main ,IO = IO, Accounts_id=account_id, family_id=family_id)
 
@@ -423,7 +422,7 @@ def keyword_insert(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""    
+        family_id = None   
     if request.method == "POST":
         keyword = request.POST.get('new_keyword')
         category_id = request.POST.get('category_id')

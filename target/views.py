@@ -25,9 +25,14 @@ main_category_list = ['Transportation',
                       'Food',
                       'Home',
                       'Utilities',
-                      'Grifts and Donations',
+                      'Gifts and Donations',
                       'Shopping',
-                      'Miscellanous'
+                      'Miscellanous',
+                      'Loans',
+                      'income',
+                      'transfer',
+                      'credit card payment',
+                      'cashback'
                     ]
 
 category_list = ['housing', 
@@ -64,6 +69,42 @@ category_list = ['housing',
                     'unassigned',
                     'income']
 
+basic_main_category ={
+                'housing':'Home', 
+                 'utilities' : 'Utilities', 
+                 'car payment':'Car', 
+                 'gas':'Car', 
+                 'groceries':'Food',
+                  'proparty tax':'Home',
+                  'home insurance':'Home',
+                  'car insurance':'Car',
+                   'internet':'Utilities',
+                   'mobile bills':'Utilities',
+                    'car wash':'Car',
+                    'subscription':'Entertainment',
+                    'food delivery':'Food',
+                    'entertainment':'Entertainment',
+                    'home improvement':'Home',
+                    'gifts':'Gifts and Donations',
+                    'donations':'Gifts and Donations',
+                    'Egypt Expenses':'Entertainment',
+                    'personal care':'Shopping',
+                    'transportation':'Transportation',
+                    'miscellaneous':'Miscellanous',
+                    'car maintenance':'Car',
+                    'home maintenance':'Home',
+                    'pet care':'Shopping',
+                    'loans':'Loans',
+                    'health':'Shopping',
+                    'clothes':'Shopping',
+                    'sport':'Entertainment',
+                    'credit card payment':'credit card payment',
+                    'refund or cashback':'cashback',
+                    'transfer':'transfer',
+                    'unassigned':'Miscellanous',
+                    'income':'income'
+}
+
 # # file_path_years = 'C:/Users/mahmo/OneDrive/Desktop/Budget/years.csv'
 # file_path_months = 'C:/Users/mahmo/OneDrive/Desktop/Budget/months.csv'
 # # with open(file_path_years, newline='', encoding='utf-8-sig') as csvfile:
@@ -91,13 +132,16 @@ def category_add(request):
         family_id = family_id.family_id
     else:
         family_id = None
-    for category in category_list:
-        if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
-            categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id)
+
             
     for category in main_category_list:
         if not main_category.objects.filter(user_id=user, category_name=category).exists():
             main_category.objects.create(user_id=user,category_name=category,family_id=family_id)
+    
+    for category in category_list:
+        if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
+            main_category_name = main_category.objects.get(user_id=user,category_name=basic_main_category[category])
+            categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
 
     if request.method == "POST":
         categories_new = request.POST.get('category')
@@ -194,7 +238,7 @@ def target_insert(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     if request.method == "POST":
         freq = request.POST.get('frequency')
 

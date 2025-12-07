@@ -26,7 +26,7 @@ def saving_target_insert(user,freq, saving_amount, start_date, date_end):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     if freq == "monthly":
         print(freq)
         while(date<=date_end):
@@ -217,7 +217,7 @@ def income_insert(user,freq, amount, start_date, date_end):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     if freq == "monthly":
         print(freq)
         while(date<=date_end):
@@ -411,7 +411,7 @@ def setSavingGoal(user, goal_name, goal_amount,account_name, due_date,create_dat
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     if not SavingGoal.objects.filter(user_id=user, Goal_name=goal_name, Goal=goal_amount, due_date=due_date,create_date=create_date,Account=account_name):
         SavingGoal.objects.create(user_id=user, Goal_name=goal_name, Goal=goal_amount, due_date=due_date,create_date=create_date,Account=account_name,family_id=family_id)
         return redirect("goal_view")

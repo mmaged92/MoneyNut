@@ -65,7 +65,7 @@ def add_account(request):
         if not account_type or not Bank_name or not account_name:
             return redirect('add_account') 
         
-        Bank_id = Bank.objects.get(Bank=Bank_name)
+        Bank_id = Bank.objects.get(Bank=Bank_name,user_id=user)
         if account_type == 'Saving' or account_type == 'Chequing':
             account_number = request.POST.get('account_number')
             Starting_balance = request.POST.get('account_balance')
@@ -122,7 +122,7 @@ def add_bank(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     if request.method == "POST":
         Bank_new = request.POST.get('Bank_new')
         if not Bank_new:
