@@ -32,7 +32,8 @@ main_category_list = ['Transportation',
                       'income',
                       'transfer',
                       'credit card payment',
-                      'cashback'
+                      'cashback',
+                      'unassigned'
                     ]
 
 category_list = ['housing', 

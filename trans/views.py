@@ -64,13 +64,13 @@ def trans_add(request):
 
             account_id = Accounts.objects.get(user_id = user, account_name=account_name)
             amount_inversed = False
+            
         # file_path = 'C:/Users/mahmo/OneDrive/Desktop/Budget/Scotia_Momentum_VISA_card_4023_092825.csv'
             try:
                 # with open(file_path, newline='') as csvfile:
                 #     reader = csv.DictReader(csvfile)
                 for row in rows:
                     amount  = row[Amount_column_name] if row['Amount'].strip() != '' else 0.0
-                    
                     try:
                         amount =float(amount)
                     except Exception:
@@ -80,8 +80,9 @@ def trans_add(request):
                         amount_inversed = True
                         break
                 
+                      
                 for row in rows:
-                    # print(row['Description'], row['Date'], row['Amount'])
+                        print(3)  
 
                     # if not trans.objects.filter(user_id=1, description=row['Description'],date=row['Date'],amount=row['Amount']).exists():
                         amount = row[Amount_column_name]
@@ -90,9 +91,9 @@ def trans_add(request):
                         except Exception:
                             amount = amount.replace("$", "").replace(",", "")
                             amount =float(amount)
-                        print(row[Description_column_name])   
                         keywords = categorization.objects.filter(user_id=user)
                         matched = False
+                        
                         for keyword in keywords:
                             if keyword.keyword.lower() in row[Description_column_name].lower():
                                 matched =True
@@ -105,62 +106,63 @@ def trans_add(request):
                             category_name = categories_table.objects.get(user_id=user,categories_name='unassigned')
                             category = category_name  
                             category_main = main_category.objects.get(user_id=user,category_name='unassigned')
-                            print(2, category.categories_name)
+                            
 
                         
                         
                         if card_type == 'Credit' and ('thank you' in row[Description_column_name].lower() or 'payment' in row[Description_column_name].lower()):
                             category = 'credit card payment'
                             category_main = 'credit card payment'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'credit card payment'
-                            print(3, category.categories_name)
                         elif card_type == 'Credit' and amount < 0 and amount_inversed == False:
                             category = 'refund or cashback'
                             category_main = 'cashback'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'income'
-                            print(4, category.categories_name)
                         elif card_type == 'Credit' and amount > 0 and amount_inversed == False:
                             IO = 'expense'
-                            print(5, category.categories_name)
                         elif card_type == 'Credit' and amount > 0 and amount_inversed == True:
                             category = 'refund or cashback'
                             category_main = 'cashback'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'income'
-                            print(6, category.categories_name)
                         elif card_type == 'Credit' and amount < 0 and amount_inversed == True:
                             IO = 'expense'
-                            print(7, category.categories_name)
                         elif card_type == 'Debit' and ('visa' in row[Description_column_name].lower() or 'mastercard' in row[Description_column_name].lower() or 'neo' in row[Description_column_name].lower() ):
                             IO = 'expense'
                             category = 'credit card payment'
                             category_main = 'credit card payment'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category)
-                            print(8, category.categories_name)
                         elif card_type == 'Debit' and amount < 0 and 'e-transfer' in row[Description_column_name].lower():
                             IO = 'expense'
                             category = 'unassigned'
                             category_main = main_category.objects.get(user_id=user,category_name='unassigned')
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
-                            print(9, category.categories_name)
                         elif card_type == 'Debit' and amount > 0 and 'e-transfer' in row[Description_column_name].lower():
                             IO = 'income'
                             category = 'income'
                             category_main = 'income'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(10, category.categories_name)
                         elif card_type == 'Debit' and amount < 0 and 'transfer' in row[Description_column_name].lower() and 'e-transfer' not in row[Description_column_name].lower() :
                             IO = 'transfer-out'
                             category = 'transfer'
                             category_main = 'transfer'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(11, category.categories_name)
                         elif card_type == 'Debit' and amount > 0 and 'transfer' in row[Description_column_name].lower() and 'e-transfer' not in row[Description_column_name].lower() :
                             IO = 'transfer-in'
                             category = 'transfer'
                             category_main = 'transfer'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                             print(12, category.categories_name)
                             
@@ -170,6 +172,7 @@ def trans_add(request):
                             IO = 'income'
                             category = 'income'
                             category_main = 'income'
+                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category) 
                         
                         try:
