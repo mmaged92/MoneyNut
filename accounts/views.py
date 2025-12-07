@@ -51,7 +51,7 @@ def add_account(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
 
     
     for bank in banks_in_canada:
@@ -333,12 +333,19 @@ def delete_accounts(request):
     return JsonResponse({'error': 'Invalid method'}, status=405)   
 
 def update_account_balance(user):
-    accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
+    try: 
+        accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
+    except Exception:
+            return
 
     account_balance = 0
     total_account_balance = 0
-    for account in accounts:  
-        date = datetime(account.Starting_balance_date.year,account.Starting_balance_date.month,account.Starting_balance_date.day)
+    for account in accounts: 
+        try: 
+            date = datetime(account.Starting_balance_date.year,account.Starting_balance_date.month,account.Starting_balance_date.day)
+        except Exception:
+            return
+            
         date_end= date.today()
         account_balance = account.Starting_balance
         while(date <= date_end):   

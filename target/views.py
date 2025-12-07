@@ -90,7 +90,7 @@ def category_add(request):
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
     else:
-        family_id = ""
+        family_id = None
     for category in category_list:
         if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
             categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id)
