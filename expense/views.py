@@ -87,7 +87,7 @@ def category_spent_sum(user,category,d_s,d_e):
 
 def category_main_spent_sum(user,category,d_s,d_e):
     if category == None:
-        category = main_category.objects.filter(user_id=user)
+        category = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e),main_category_id__in=category)))['total']    
     else:
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', main_category_id=category, date__range=(d_s, d_e))))['total']    
@@ -188,7 +188,7 @@ def category_spent_pichart(user):
     d_s = datetime(year,month_no,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     
-    categories = main_category.objects.filter(user_id=user)
+    categories = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(user,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -204,7 +204,7 @@ def category_pent_bar(user):
     month_no = next(int(n) for n, m in month_dict.items() if m == month)
     d_s = datetime(year,month_no,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
-    categories = main_category.objects.filter(user_id=user)
+    categories = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(user,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -655,7 +655,7 @@ def this_month_spent_percentage_calc(user,date):
     d_s = datetime(year,month,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     
-    categories = main_category.objects.filter(user_id=user)
+    categories = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(user,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -772,6 +772,7 @@ def monthly_view(request):
         'months':month_list,
         "selected_year": year,
         "selected_month": month,
+        'Month':month,
         "categories":category_list,
         "selected_category":selected_category,
         "isfamily":isfamily

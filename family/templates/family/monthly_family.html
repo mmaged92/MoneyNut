@@ -11,7 +11,7 @@
     <div class='row card-container'>
         <div class = 'col-12'>
             <div class = 'card-tv-1'>
-                <p class="heading " >Mounthly View </p>
+                <p class="heading " >Mounthly View : {{Month}}</p>
                 <div class="container justify-content-md-center">
                     <form action = {% url 'monthly_view_family'%} method = 'post'>
                         {% csrf_token %}
