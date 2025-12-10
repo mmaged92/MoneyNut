@@ -7,3 +7,5 @@
 # VS Code
 .vscode/
 
+*.pyc
+*.sqlite3
