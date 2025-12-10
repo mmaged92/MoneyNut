@@ -585,6 +585,12 @@ def file_mapping(request):
             FileMapping.objects.create(account_id=account,Date_header_name=Date_column_name,
                                         Amount_header_name=Amount_column_name,
                                         Description_header_name=Description_column_name)
+        else:
+            update = FileMapping.objects.get(account_id=account)
+            update.Date_header_name=Date_column_name
+            update.Amount_header_name=Amount_column_name
+            update.Description_header_name=Description_column_name
+            update.save()
             
         return JsonResponse({'status': 'added'})
     return JsonResponse({'error': 'Invalid method'}, status=405)
