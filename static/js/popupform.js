@@ -23,7 +23,7 @@ async function file_mapping_fn(Date_column_name, Description_column_name, Amount
     })
 
     
-
+    togglePopup();
 
 }
 
