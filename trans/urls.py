@@ -8,7 +8,7 @@ urlpatterns = [
     path('account_get/',views.Account_get,name="trans_account"),
     path('io_get/',views.IO_get,name="trans_io"),
     path('refresh_categorization/',views.refresh_categorization,name="refresh_categorization"),
-    # path('refresh/',views.refresh,name="refresh"),
+    path('file_mapping/',views.file_mapping,name="file_mapping"),
 
     path('descriptionupdate/',views.description_update,name="description_update"),
     path('date_update/',views.date_update,name="date_update"),

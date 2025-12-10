@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import trans, categorization
+from .models import trans, categorization,FileMapping
 import csv
 from django.http import JsonResponse
 from target.models import categories_table, main_category
@@ -40,22 +40,22 @@ def trans_add(request):
     if request.method == "POST":
         input_type = request.POST.get('input_type')
         if input_type =='file_upload':
-            Date_column_name = request.POST.get("Date_column_name")
-            Description_column_name = request.POST.get("Description_column_name")
-            Amount_column_name = request.POST.get("Amount_column_name")
-            if not Date_column_name:
-                Date_column_name = "Date"
-            if not Date_column_name:
-                Description_column_name = "Description"
-            if not Amount_column_name:
-                Amount_column_name = "Amount"                     
+            # Date_column_name = request.POST.get("Date_column_name")
+            # Description_column_name = request.POST.get("Description_column_name")
+            # Amount_column_name = request.POST.get("Amount_column_name")
+            # if not Date_column_name:
+            #     Date_column_name = "Date"
+            # if not Date_column_name:
+            #     Description_column_name = "Description"
+            # if not Amount_column_name:
+            #     Amount_column_name = "Amount"                     
             
             card_type = request.POST.get('card_type')
             account_name = request.POST.get('account_name')
             
             file_path = request.FILES['file_path']
             
-            if not file_path or not account_name or not card_type or not Amount_column_name or not Date_column_name or not Date_column_name:
+            if not file_path or not account_name or not card_type:
                 return redirect("trans_page")
 
             decoded_file = file_path.read().decode('utf-8-sig').splitlines()
@@ -63,6 +63,25 @@ def trans_add(request):
             rows = list(reader)
 
             account_id = Accounts.objects.get(user_id = user, account_name=account_name)
+            if FileMapping.objects.filter(account_id=account_id).exists():
+                file_mapping = FileMapping.objects.get(account_id=account_id)
+                Date_column_name = file_mapping.Date_header_name
+                Description_column_name = file_mapping.Description_header_name
+                Amount_column_name = file_mapping.Amount_header_name
+            else:
+                print("file mapping required")
+                categories = categories_table.objects.filter(user_id=user)
+                account_names = Accounts.objects.filter(user_id=user)
+    
+                if familyMemebers.objects.filter(user_id=user).exists():
+                    isfamily = True
+                else:
+                    isfamily = False
+                context = {
+                        'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily,"mapping_required": True
+                }
+                return render(request, 'trans/trans.html', context)
+            
             amount_inversed = False
             
         # file_path = 'C:/Users/mahmo/OneDrive/Desktop/Budget/Scotia_Momentum_VISA_card_4023_092825.csv'
@@ -82,7 +101,6 @@ def trans_add(request):
                 
                       
                 for row in rows:
-                        print(3)  
 
                     # if not trans.objects.filter(user_id=1, description=row['Description'],date=row['Date'],amount=row['Amount']).exists():
                         amount = row[Amount_column_name]
@@ -230,8 +248,10 @@ def trans_add(request):
     else:
         isfamily = False
        
-
-    return render(request, 'trans/trans.html', {'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily})
+    context = {
+        'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily
+    }
+    return render(request, 'trans/trans.html', context)
 
 @login_required(login_url="/users/loginpage/")
 def trans_edit(request):
@@ -534,7 +554,7 @@ def keyword_category_update(request):
 def refresh_categorization(request):
     user = request.user
     trans_list = trans.objects.filter(user_id=user)
-    if request == 'PUT':
+    if request.method == 'PUT':
         print('refreshed')
         for transaction in trans_list:
             description = transaction.description
@@ -546,4 +566,25 @@ def refresh_categorization(request):
             except Exception:
                 pass
         return JsonResponse({'status': 'updated'})
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+@login_required(login_url="/users/loginpage/")
+def file_mapping(request):
+    if request.method == 'POST':
+        print("HERE")
+        data = json.loads(request.body)
+        Date_column_name = data.get('Date_column_name')
+        Description_column_name = data.get('Description_column_name')
+        Amount_column_name = data.get('Amount_column_name')
+        account_name_mapping_id = data.get('account_name_mapping')
+        # print(Date_column_name,Description_column_name,Amount_column_name,account_name_mapping_id)
+        if not Date_column_name or not Description_column_name or not Amount_column_name or not account_name_mapping_id:
+            return
+        account = Accounts.objects.get(id=account_name_mapping_id)
+        if not FileMapping.objects.filter(account_id=account).exists():
+            FileMapping.objects.create(account_id=account,Date_header_name=Date_column_name,
+                                        Amount_header_name=Amount_column_name,
+                                        Description_header_name=Description_column_name)
+            
+        return JsonResponse({'status': 'added'})
     return JsonResponse({'error': 'Invalid method'}, status=405)

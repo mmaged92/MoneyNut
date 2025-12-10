@@ -694,24 +694,24 @@ def category_spent_bar_daily(family_id):
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
 
     while(date < d_e):    
-        Total_daily_spent = round(spent_day_sum(family_id,category_view,date),2)
+        Total_daily_spent = round(spent_day_sum(family_id,date),2)
         datedisplay = date.strftime("%b/%d")
         category_spent.append({'y': Total_daily_spent, 'label': datedisplay})
         date = date + timedelta(days=1)
 
     return category_spent  
 
-def spent_day_sum(family_id,category,date):
-    if category == 'Overall':
-        category = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, IO='expense', date=date, category_id__in=category)))['total']    
-    else:
-        category = categories_table.objects.get(family_id=family_id,categories_name=category)
-        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, IO='expense', category_id=category, date=date)))['total']    
-    if category_spent_total == None:
-        category_spent_total = 0
-    else:
-        category_spent_total = round(category_spent_total,2)
+def spent_day_sum(family_id,date):
+    # if category == 'Overall':
+    category = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
+    category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, IO='expense', date=date, category_id__in=category)))['total'] or 0  
+    # else:
+    #     category = categories_table.objects.get(family_id=family_id,categories_name=category)
+    #     category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, IO='expense', category_id=category, date=date)))['total']    
+    # if category_spent_total == None:
+    #     category_spent_total = 0
+    # else:
+    #     category_spent_total = round(category_spent_total,2)
     
     return round(category_spent_total,2) 
 
@@ -846,14 +846,14 @@ def monthly_balance_tracker(family_id):
 @login_required(login_url="/users/loginpage/")
 def monthly_view(request):
     user = request.user
-    category_list = ["Overall"]
+    # category_list = ["Overall"]
     if familyMemebers.objects.filter(user_id=user).exists():  
         
         family_id = familyMemebers.objects.get(user_id=user)  
         family_id = family_id.family_id
-        categories = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-        for category in categories:
-            category_list.append(category.categories_name)
+        # categories = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
+        # for category in categories:
+        #     category_list.append(category.categories_name)
     global year
     global month
     global month_no
@@ -875,7 +875,7 @@ def monthly_view(request):
     
 
         
-    selected_category = request.session.get("selected_category", "Overall")
+    # selected_category = request.session.get("selected_category", "Overall")
     
     
     context = {
@@ -884,8 +884,8 @@ def monthly_view(request):
         "selected_year": year,
         "selected_month": month,
         "Month":month,
-        "categories":category_list,
-        "selected_category":selected_category,
+        # "categories":category_list,
+        # "selected_category":selected_category,
         "isfamily":True
     }  
     

@@ -12,11 +12,11 @@ async function category_view_send(category_view) {
     window.location.reload();
 
 }
-const categoryselector = document.getElementById('categoryselector')
-categoryselector.addEventListener('change', () => {
-    const category_view = categoryselector.value;
-    category_view_send(category_view);
-});
+// const categoryselector = document.getElementById('categoryselector')
+// categoryselector.addEventListener('change', () => {
+//     const category_view = categoryselector.value;
+//     category_view_send(category_view);
+// });
 
 function getCookie(name) {
     let cookieValue = null;

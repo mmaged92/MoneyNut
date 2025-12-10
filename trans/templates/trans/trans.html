@@ -20,12 +20,15 @@
         <div class = 'card-trans-1'>
             <p class="heading" >Upload csv file</p>
             <div class="container justify-content-md-center">
-                <form name="trans_entry" action={% url 'trans_page'%} onsubmit="validateForm()" method="post" enctype="multipart/form-data" >
+                <form name="trans_entry" action={% url 'trans_page'%}  method="post" enctype="multipart/form-data" >
                     {%  csrf_token %}
                     <input type="hidden" name="input_type" value="file_upload" required>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
                         <div class="col-lg-6 col-md-12">
                             <input class="form-control" type='file' name='file_path' id = 'file_path' accept=".csv">
+                        </div>
+                        <div class="col-lg-2 col-md-12 text-center" onclick="togglePopup()">
+                            <button class="btn btn-primary">File Mapping</button>
                         </div>
                     </div>
                     <div class="row justify-content-md-center">
@@ -54,7 +57,7 @@
                         </select>
                     </div>
                     </div>
-                    <div class="row justify-content-md-center" style="padding-bottom: 5px">
+                    {% comment %} <div class="row justify-content-md-center" style="padding-bottom: 5px">
                         <label style="text-align: center;">File Mapping</label>
                     </div>
                     <div class="row justify-content-md-center" style="padding-bottom: 5px">
@@ -76,7 +79,7 @@
                         <div class="col-lg-2 col-md-6">
                             <input id = 'Amount_column_name' type='text' name = 'Amount_column_name' style="width: 100%;" required>
                         </div>
-                    </div>   
+                    </div>    {% endcomment %}
 
                     <div class="text-center" style="padding-top:10px; padding-bottom: 10px" >
                         <button type = 'submit' class="btn btn-success ">Upload File</button>
@@ -167,13 +170,78 @@
         </div>
     </div>
 </div>
+{% if mapping_required %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    togglePopup();
+});
+</script>
+{%endif%}
+<div id="popupOverlay" 
+    class="overlay-container">
+        <div class="popup-box">
+            <div class="row justify-content-md-center" style="padding-bottom: 5px">
+                <label style="text-align: center;">File Mapping</label>
+            </div>
+        <div class="form-container" >
+            <div class="row">
+                <div class="col-12">
+                    <select id  = 'account_name_mapping' style="width: 100%;" required> 
+                            <option value=''>--Select Account--</option>
+                            {%for account_name in account_names %}
+                                <option value = "{{account_name.id}}">{{account_name.account_name}}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Enter name of Date Column</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <input id = 'Date_column_name' type='text' style="width: 100%;" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <label>Enter name of Description Column</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <input id = 'Description_column_name' type='text' style="width: 100%;" required>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-12">
+                    <label>Enter name of Date Amount Column</label>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-12">
+                    <input id = 'Amount_column_name' type='text'  style="width: 100%;" required>
+                </div>
+             </div>
+
+            <div class="text-center" style="padding-top:10px">
+                <button id='save_btn' type = 'submit' class="btn btn-success">Save</button>
+            </div>
+        </div>
+        <div class="text-center" style="padding-top:10px" onclick="togglePopup()">
+            <button class="btn btn-danger ">Close</button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_scripts %}
 
 {% load static %}  
-<script src="{% static 'js/upload.js' %}" defer></script>
-
+<script src="{% static 'js/popupform.js' %}" defer></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 {% endblock %}

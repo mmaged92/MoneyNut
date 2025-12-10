@@ -22,5 +22,11 @@ class trans(models.Model):
     Accounts_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, null=True)
     family_id = models.ForeignKey(family, on_delete=models.CASCADE, null=True, blank=True)
 
+class FileMapping(models.Model):
+    account_id =  models.ForeignKey(Accounts, on_delete=models.CASCADE)
+    Date_header_name = models.CharField(max_length=255, null=True)
+    Amount_header_name = models.CharField(max_length=255, null=True)
+    Description_header_name = models.CharField(max_length=255, null=True)
+    
 
     
