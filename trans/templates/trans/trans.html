@@ -7,34 +7,34 @@
 
 {% block content %}
 
-{% if mapping_required %}
+{% if request.GET.mapping_required %}
     <div class="row alert alert-warning alert-dismissible fade show" role="alert">
         <div class = "col-auto">
-            <strong>File Mapping </strong> is required
+           <i class="fa-solid fa-triangle-exclamation"></i> <strong> File Mapping </strong> is required
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
 {%endif%}
-{% if "success" in file_upload_success %}
+{% if request.GET.file_upload_success %}
     <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
         <div class = "col-auto">
-            File is Uploaded <strong>successfully</strong>
+            <i class="fa-solid fa-circle-check"></i> File is Uploaded <strong>successfully</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
 {%endif %}
-{% if "fail" in file_upload_success  %}
+{% if request.GET.file_upload_fail  %}
     <div class="row alert alert-warning alert-dismissible fade show" role="alert">
         <div class = "col-auto">
-            File Upload <strong>failed</strong>
+            <i class="fa-solid fa-circle-xmark"></i> File Upload <strong>failed</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
 {%endif %}
-{% if Single_entry_success %}
+{% if request.GET.Single_entry_success %}
     <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
         <div class = "col-auto">
-            Transaction entered <strong>successfully</strong>
+            <i class="fa-solid fa-circle-check"></i> Transaction entered <strong>successfully</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>

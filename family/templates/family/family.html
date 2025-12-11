@@ -34,7 +34,24 @@
     </form>
 </div>
 
-    
+    {% if request.GET.userpartoffamily %}
+  
+    <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+             <i class="fa-solid fa-triangle-exclamation"></i> User is already part of another family <strong>Cannot send an invitation to this user</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endif %}
+    {% if request.GET.invitationsend %}
+  
+    <div class="row alert alert-success alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            <i class="fa-solid fa-circle-check"></i>  email invitation sent 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endif %}
 
 
 

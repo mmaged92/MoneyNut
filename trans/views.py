@@ -71,17 +71,8 @@ def trans_add(request):
                 Amount_column_name = file_mapping.Amount_header_name
             else:
                 mapping_required = True
-                context = {
-                        'card_types': card_types, 
-                        'categories':categories, 
-                        'ios':ios, 
-                        'account_names':account_names,
-                        "isfamily":isfamily,
-                        "mapping_required": mapping_required,
-                        "file_upload_success":file_upload_success,
-                        "Single_entry_success":Single_entry_success
-                }
-                return render(request, 'trans/trans.html', context)
+
+                return redirect('/trans/?mapping_required=1')
             
             amount_inversed = False
             
@@ -204,31 +195,11 @@ def trans_add(request):
                         if not trans.objects.filter(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category, main_category_id=category_main, IO = IO, Accounts_id= account_id).exists():
                             trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id, family_id=family_id)
                             print("")
-                file_upload_success = 'success'
-                context = {
-                        'card_types': card_types, 
-                        'categories':categories, 
-                        'ios':ios, 
-                        'account_names':account_names,
-                        "isfamily":isfamily,
-                        "mapping_required": mapping_required,
-                        "file_upload_success":file_upload_success,
-                        "Single_entry_success":Single_entry_success
-                }
-                return render(request, 'trans/trans.html', context)
+
+                return redirect('/trans/?file_upload_success=1')
             except Exception:
-                file_upload_success = 'fail'
-                context = {
-                        'card_types': card_types, 
-                        'categories':categories, 
-                        'ios':ios, 
-                        'account_names':account_names,
-                        "isfamily":isfamily,
-                        "mapping_required": mapping_required,
-                        "file_upload_success":file_upload_success,
-                        "Single_entry_success":Single_entry_success
-                }
-                return render(request, 'trans/trans.html', context)
+
+                return redirect('/trans/?file_upload_fail=1')
             
             
         if input_type =='single_entry':  
@@ -261,24 +232,13 @@ def trans_add(request):
             if not trans.objects.filter(user_id=user, description=description,date=date,amount=amount, category_id = category,main_category_id= category_main,IO = IO, Accounts_id=account_id).exists():
                 trans.objects.create(user_id=user,description=description,date=date,amount=amount, category_id = category,main_category_id= category_main ,IO = IO, Accounts_id=account_id, family_id=family_id)
             Single_entry_success = False
-            context = {
-                        'card_types': card_types, 
-                        'categories':categories, 
-                        'ios':ios, 
-                        'account_names':account_names,
-                        "isfamily":isfamily,
-                        "mapping_required": mapping_required,
-                        "Single_entry_success":Single_entry_success
-                }
-            return render(request, 'trans/trans.html', context)
+            return redirect('/trans/?Single_entry_success=1')
     context = {
                         'card_types': card_types, 
                         'categories':categories, 
                         'ios':ios, 
                         'account_names':account_names,
-                        "isfamily":isfamily,
-                        "mapping_required": mapping_required
-                        
+                        "isfamily":isfamily                        
                 }      
     return render(request, 'trans/trans.html', context)
 

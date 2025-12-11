@@ -15,6 +15,7 @@ from dateutil.relativedelta import relativedelta
 from target.models import main_category, budget_target, categories_table
 from saving.models import SavingTarget, SavingGoal, expectedIncome
 from accounts.models import Bank, Accounts
+from django.contrib.auth.models import User
 
 month_dict = {
     1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
@@ -135,6 +136,11 @@ def family_invite(request):
         email = request.POST.get("Send_invite")
         if not email:
             return redirect("family_invite")
+        if User.objects.filter(email=email).exists():
+            user_invited = User.objects.get(email=email)
+            if familyMemebers.objects.filter(user_id=user_invited).exists():
+                return redirect("/family/?userpartoffamily=1")
+        
         if familyMemebers.objects.filter(user_id=user).exists():
             family_id = familyMemebers.objects.get(user_id=user)
             token = family_id.family_id.Token
@@ -151,7 +157,7 @@ def family_invite(request):
             invitationstatus.objects.create(user_id=user,email_sent=email, invitation_status='invitation sent') 
         
         send_welcome_email(email, token) 
-    
+        return redirect("/family/?invitationsend=1")
     if familyMemebers.objects.filter(user_id=request.user).exists():
         isfamily = True
     else:

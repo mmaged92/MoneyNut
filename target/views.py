@@ -155,10 +155,11 @@ def category_add(request):
         else:
             fixed_fees = False
         
-        if categories_new: 
-            if not categories_table.objects.filter(user_id=user, categories_name__iexact=categories_new, main_category_id__iexact=categories_new).exists():
-                categories_table.objects.create(user_id=user,categories_name=categories_new,Fixed_fees=fixed_fees,main_category_id=categories_new,family_id=family_id)
-        
+        if categories_new and main_category_name: 
+            if not categories_table.objects.filter(user_id=user, categories_name__iexact=categories_new).exists():
+                categories_table.objects.create(user_id=user,categories_name=categories_new,Fixed_fees=fixed_fees,main_category_id=main_category_name,family_id=family_id)
+            return redirect("category_add")
+        else:
             return redirect("category_add")
     main_categories =  main_category.objects.filter(user_id=user)
     categories = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','unassigned','transfer','income'])
