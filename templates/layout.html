@@ -29,54 +29,54 @@
         <div class="offcanvas-body">
               <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                   <li class="nav-item">
-                    <a class="nav-link text-truncate" href={% url 'dashboard_view' %} aria-current="true"><span class="ms-0 d-none d-sm-inline "><i class="fa-solid fa-gauge"></i> DashBoard</span></a>
+                    <a class="nav-link text-truncate" href={% url 'dashboard_view' %} aria-current="true"><span class="ms-0 d-sm-inline "><i class="fa-solid fa-gauge"></i> DashBoard</span></a>
                   </li>
                   <li class="nav-item">
                         <a class="nav-link text-truncate"  href="#submenu1" data-bs-toggle="collapse" aria-current="true">
-                            <i class="fa-solid fa-book"></i> <span class="ms-1 d-none d-sm-inline">Reports</span><i class="fa fa-caret-down"></i></a>
+                            <i class="fa-solid fa-book"></i> <span class="ms-1 d-sm-inline">Reports</span><i class="fa fa-caret-down"></i></a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu1">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate" href="{%url 'monthly_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Monthly View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'annual_actual_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Annually View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'annual_target_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Annual Target</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'Saving_goal'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Saving Goal View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'accounts_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Accounts View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'monthly_view'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Monthly View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'annual_actual_view'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Annually View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'annual_target_view'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Annual Target</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'Saving_goal'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Saving Goal View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'accounts_view'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Accounts View</span></a>
                             </li>
                         </ul>
                   </li>
                   <li class="nav-item">
                         <a class="nav-link text-truncate"  href="#submenu2" data-bs-toggle="collapse" aria-current="true">
-                            <i class="fa-solid fa-vault"></i> <span class="ms-1 d-none d-sm-inline">Saving/Income</span><i class="fa fa-caret-down"></i></a>
+                            <i class="fa-solid fa-vault"></i> <span class="ms-1 d-sm-inline">Saving/Income</span><i class="fa fa-caret-down"></i></a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu2">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate" href="{%url 'saving_monthly_target'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Set Saving Target</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'goal_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Set Saving Goal</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'income_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-wallet"></i> Add expected income</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'saving_monthly_target'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Set Saving Target</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'goal_view'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Set Saving Goal</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'income_view'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-wallet"></i> Add expected income</span></a>
                             </li>
                         </ul>
                   </li>
                   <li class="nav-item">
                         <a class="nav-link text-truncate"  href="#submenu3" data-bs-toggle="collapse" aria-current="true">
-                            <i class="fa-solid fa-gear"></i> <span class="ms-1 d-none d-sm-inline">Settings</span><i class="fa fa-caret-down"></i></a>
+                            <i class="fa-solid fa-gear"></i> <span class="ms-1 d-sm-inline">Settings</span><i class="fa fa-caret-down"></i></a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu3">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate" href="{%url 'add_account'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Add Account</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'category_add'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-icons"></i> Add Category</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'add_bank'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Add Bank</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'keyword'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-equals"></i> Set Keywords</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'target_insert'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-regular fa-circle-dot"></i> Set Budget target</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'family_invite'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-people-pulling"></i> Invite Family Memeber</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'add_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-person-circle-plus"></i> Add Family Memeber with Token</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'add_account'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Add Account</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'category_add'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-icons"></i> Add Category</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'add_bank'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-building-columns"></i> Add Bank</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'keyword'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-equals"></i> Set Keywords</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'target_insert'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-regular fa-circle-dot"></i> Set Budget target</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'family_invite'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-people-pulling"></i> Invite Family Memeber</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'add_family'%}" aria-current="true"> <span class=" d-sm-inline ms-3"><i class="fa-solid fa-person-circle-plus"></i> Add Family Memeber with Token</span></a>
                             </li>
                         </ul>
                   </li>
                   <li class="nav-item">
                         <a class="nav-link text-truncate"  href="#submenu4" data-bs-toggle="collapse" aria-current="true">
-                            <i class="fa-solid fa-money-bill-transfer"></i> <span class="ms-1 d-none d-sm-inline">Transactions</span><i class="fa fa-caret-down"></i></a>
+                            <i class="fa-solid fa-money-bill-transfer"></i> <span class="ms-1 d-sm-inline">Transactions</span><i class="fa fa-caret-down"></i></a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu4">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate" href="{%url 'trans_page'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-file-arrow-up"></i> Enter Transactions</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'trans_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-table"></i> View Transactions</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'trans_page'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-file-arrow-up"></i> Enter Transactions</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'trans_view'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-table"></i> View Transactions</span></a>
                             </li>
                         </ul>
                   </li>
@@ -86,21 +86,21 @@
 
                   <li class="nav-item">
                         <a class="nav-link text-truncate"  href="#submenu5" data-bs-toggle="collapse" aria-current="true">
-                            <i class="fa-solid fa-house-chimney-window"></i> <span class="ms-1 d-none d-sm-inline">Family</span><i class="fa fa-caret-down"></i></a>
+                            <i class="fa-solid fa-house-chimney-window"></i> <span class="ms-1 d-sm-inline">Family</span><i class="fa fa-caret-down"></i></a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu5">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate" href="{%url 'family_dashboard_view'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-gauge"></i> Family DashBoard</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'monthly_view_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Monthly View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'annual_actual_view_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Annually View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'annual_target_view_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Annual Target View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'Saving_goal_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Family Saving Goal View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'trans_view_family'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-table"></i> Family Transactions View</span></a>
-                                <a class="nav-link text-truncate" href="{%url 'view_family_members'%}" aria-current="true"> <span class="d-none d-sm-inline ms-3"><i class="fa-solid fa-people-group"></i> View Family Members</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'family_dashboard_view'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-gauge"></i> Family DashBoard</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'monthly_view_family'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Monthly View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'annual_actual_view_family'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Annually View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'annual_target_view_family'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-money-bill-trend-up"></i> Family Annual Target View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'Saving_goal_family'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-sack-dollar"></i> Family Saving Goal View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'trans_view_family'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-table"></i> Family Transactions View</span></a>
+                                <a class="nav-link text-truncate" href="{%url 'view_family_members'%}" aria-current="true"> <span class="d-sm-inline ms-3"><i class="fa-solid fa-people-group"></i> View Family Members</span></a>
                             </li>
                         </ul>
                   </li>
                   {%endif%}
-                  
+              </ul> 
         </div>
       </div>
       {%endif%}
