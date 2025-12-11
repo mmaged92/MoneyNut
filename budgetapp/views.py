@@ -23,6 +23,8 @@ def loginpage(request):
         if form.is_valid():
             login(request, form.get_user())
             return redirect("dashboard_view")
+        else:
+            return redirect("/?failed=1")
     else:
         form = AuthenticationForm()
 
@@ -45,8 +47,7 @@ def register(request):
             return redirect("dashboard_view")
 
         else:
-            print(form.errors)
-            return redirect("register")
+            return redirect("/register/?failed=1")
         
     if request.user.is_authenticated:
         return redirect('dashboard_view')

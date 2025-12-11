@@ -34,21 +34,22 @@ def trans_add(request):
     if familyMemebers.objects.filter(user_id=user).exists():
         family_id = familyMemebers.objects.get(user_id=user)
         family_id = family_id.family_id
+        isfamily = True
     else:
         family_id = None
+        isfamily = False
+        
+    categories = categories_table.objects.filter(user_id=user)
+    account_names = Accounts.objects.filter(user_id=user)
+    
+    mapping_required = False
+    file_upload_success = 'pending'
+    Single_entry_success = False
     
     if request.method == "POST":
         input_type = request.POST.get('input_type')
         if input_type =='file_upload':
-            # Date_column_name = request.POST.get("Date_column_name")
-            # Description_column_name = request.POST.get("Description_column_name")
-            # Amount_column_name = request.POST.get("Amount_column_name")
-            # if not Date_column_name:
-            #     Date_column_name = "Date"
-            # if not Date_column_name:
-            #     Description_column_name = "Description"
-            # if not Amount_column_name:
-            #     Amount_column_name = "Amount"                     
+                    
             
             card_type = request.POST.get('card_type')
             account_name = request.POST.get('account_name')
@@ -69,16 +70,16 @@ def trans_add(request):
                 Description_column_name = file_mapping.Description_header_name
                 Amount_column_name = file_mapping.Amount_header_name
             else:
-                print("file mapping required")
-                categories = categories_table.objects.filter(user_id=user)
-                account_names = Accounts.objects.filter(user_id=user)
-    
-                if familyMemebers.objects.filter(user_id=user).exists():
-                    isfamily = True
-                else:
-                    isfamily = False
+                mapping_required = True
                 context = {
-                        'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily,"mapping_required": True
+                        'card_types': card_types, 
+                        'categories':categories, 
+                        'ios':ios, 
+                        'account_names':account_names,
+                        "isfamily":isfamily,
+                        "mapping_required": mapping_required,
+                        "file_upload_success":file_upload_success,
+                        "Single_entry_success":Single_entry_success
                 }
                 return render(request, 'trans/trans.html', context)
             
@@ -203,10 +204,31 @@ def trans_add(request):
                         if not trans.objects.filter(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category, main_category_id=category_main, IO = IO, Accounts_id= account_id).exists():
                             trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id, family_id=family_id)
                             print("")
-                print("Success")
+                file_upload_success = 'success'
+                context = {
+                        'card_types': card_types, 
+                        'categories':categories, 
+                        'ios':ios, 
+                        'account_names':account_names,
+                        "isfamily":isfamily,
+                        "mapping_required": mapping_required,
+                        "file_upload_success":file_upload_success,
+                        "Single_entry_success":Single_entry_success
+                }
+                return render(request, 'trans/trans.html', context)
             except Exception:
-                print("failed")
-                return redirect("trans_page")
+                file_upload_success = 'fail'
+                context = {
+                        'card_types': card_types, 
+                        'categories':categories, 
+                        'ios':ios, 
+                        'account_names':account_names,
+                        "isfamily":isfamily,
+                        "mapping_required": mapping_required,
+                        "file_upload_success":file_upload_success,
+                        "Single_entry_success":Single_entry_success
+                }
+                return render(request, 'trans/trans.html', context)
             
             
         if input_type =='single_entry':  
@@ -238,19 +260,26 @@ def trans_add(request):
                 family_id = None     
             if not trans.objects.filter(user_id=user, description=description,date=date,amount=amount, category_id = category,main_category_id= category_main,IO = IO, Accounts_id=account_id).exists():
                 trans.objects.create(user_id=user,description=description,date=date,amount=amount, category_id = category,main_category_id= category_main ,IO = IO, Accounts_id=account_id, family_id=family_id)
-
-            
-    categories = categories_table.objects.filter(user_id=user)
-    account_names = Accounts.objects.filter(user_id=user)
-    
-    if familyMemebers.objects.filter(user_id=user).exists():
-        isfamily = True
-    else:
-        isfamily = False
-       
+            Single_entry_success = False
+            context = {
+                        'card_types': card_types, 
+                        'categories':categories, 
+                        'ios':ios, 
+                        'account_names':account_names,
+                        "isfamily":isfamily,
+                        "mapping_required": mapping_required,
+                        "Single_entry_success":Single_entry_success
+                }
+            return render(request, 'trans/trans.html', context)
     context = {
-        'card_types': card_types, 'categories':categories, 'ios':ios, 'account_names':account_names,"isfamily":isfamily
-    }
+                        'card_types': card_types, 
+                        'categories':categories, 
+                        'ios':ios, 
+                        'account_names':account_names,
+                        "isfamily":isfamily,
+                        "mapping_required": mapping_required
+                        
+                }      
     return render(request, 'trans/trans.html', context)
 
 @login_required(login_url="/users/loginpage/")

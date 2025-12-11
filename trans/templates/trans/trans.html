@@ -7,14 +7,38 @@
 
 {% block content %}
 
-<div class="alert alert-success" role="alert" id = 'alart-file'>
-  File Uploaded successfully
-</div>
-
-<div class="alert alert-success" role="alert" id = 'alart-single-e'>
-  Transaction entered successfully
-</div>
-
+{% if mapping_required %}
+    <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            <strong>File Mapping </strong> is required
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif%}
+{% if "success" in file_upload_success %}
+    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            File is Uploaded <strong>successfully</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif %}
+{% if "fail" in file_upload_success  %}
+    <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            File Upload <strong>failed</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif %}
+{% if Single_entry_success %}
+    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            Transaction entered <strong>successfully</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif%}
 <div class='row card-container'>
     <div class = 'col-12'>
         <div class = 'card-trans-1'>
@@ -170,13 +194,7 @@
         </div>
     </div>
 </div>
-{% if mapping_required %}
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    togglePopup();
-});
-</script>
-{%endif%}
+
 <div id="popupOverlay" 
     class="overlay-container">
         <div class="popup-box">

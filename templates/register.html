@@ -7,8 +7,11 @@
 
 {% block content %}
 {% load widget_tweaks %}
+
   <section class="vh-100" style="background-image: url('/media/bakground.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+
     <div class="container py-5 h-100">
+
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-xl-10">
           <div class="card" style="border-radius: 1rem;">
@@ -72,8 +75,20 @@
             </div>
           </div>
         </div>
-      </div>
+        {% if request.GET.failed %}
+  
+        <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+          <div class = "col-auto">
+              Registration <strong>failed</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        </div>
+        {% endif %}
     </div>
+      </div>
+
+
   </section>
+
 
 {% endblock %}
