@@ -73,8 +73,7 @@ def getMonthlyView(user):
 
 def category_spent_sum(user,category,d_s,d_e):
     if category == None:
-        category = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e),category_id__in=category)))['total']    
+        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e))))['total']    
     else:
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', category_id=category, date__range=(d_s, d_e))))['total']    
     
@@ -87,8 +86,7 @@ def category_spent_sum(user,category,d_s,d_e):
 
 def category_main_spent_sum(user,category,d_s,d_e):
     if category == None:
-        category = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
-        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e),main_category_id__in=category)))['total']    
+        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e))))['total']    
     else:
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', main_category_id=category, date__range=(d_s, d_e))))['total']    
     if category_spent_total == None:
@@ -100,8 +98,8 @@ def category_main_spent_sum(user,category,d_s,d_e):
 
 def spent_day_sum(user,date):
     # if category == 'Overall':
-    category = categories_table.objects.filter(user_id=user).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-    category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date=date, category_id__in=category)))['total'] or 0
+   
+    category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date=date)))['total'] or 0
     # else:
     #     category = categories_table.objects.get(user_id=user,categories_name=category)
     #     category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', category_id=category, date=date)))['total']    
@@ -162,8 +160,6 @@ def budget_status(user,category,d_s,d_e, days_month):
         if target_total == None:
             target_total = 0
 
-        target_No_FF_total =  budget_target.objects.aggregate(total=Sum('target', filter=Q(user_id=user,category_id__Fixed_fees=False,date__range=(d_s,d_e))))['total'] or 0
-        spent_FF_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,category_id__Fixed_fees=False, IO='expense', date__range=(d_s, d_e))))['total'] or 0
 
         if datetime.today() <= d_e:
             days = datetime.today().day 
@@ -609,7 +605,7 @@ def fixed_fees_remaining_calc(user,year, month_no):
 def this_month_status_calc(user,year,month_no):
     
     d_s = datetime(year,month_no,1)  
-    d_e = d_s +relativedelta(months=1)
+    d_e = d_s +relativedelta(months=1) - timedelta(days=1)
     month = month_dict[month_no]
     days_month = d_e - timedelta(days=1)
     days_month = days_month.day
