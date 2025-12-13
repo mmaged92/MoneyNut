@@ -64,3 +64,9 @@ def logout_view(request):
 
 def about(request):
     return render(request, "about.html")
+def terms(request):
+    return render(request, "terms.html")
+def contact(request):
+    return render(request, "contact.html")
+def privacy(request):
+    return render(request, "privacy.html")

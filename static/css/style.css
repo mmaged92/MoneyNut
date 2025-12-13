@@ -753,3 +753,8 @@ a.btn-toggle:hover {
             display: flex;
             opacity: 1;
         }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            text-align: center;
+        }

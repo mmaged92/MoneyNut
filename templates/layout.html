@@ -261,12 +261,22 @@
           </div>
         </div> {% endcomment %}
     <div>
+
       {% block content %}
 
       {% endblock %}
+      <hr>
+      <footer>
+          <p>
+              <a href="{% url 'terms' %}">Terms and Conditions</a> |
+              <a href="{% url 'privacy' %}">Privacy Policy</a> |
+              <a href="{% url 'contact' %}">Contact</a>
+          </p>
+          <p>© 2025 Mahmoud Hammad</p>
+      </footer>
     </div>
       {% block extra_scripts %}
         
       {% endblock %}
-    </body>
+
 </html>
