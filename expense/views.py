@@ -73,7 +73,9 @@ def getMonthlyView(user):
 
 def category_spent_sum(user,category,d_s,d_e):
     if category == None:
-        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', date__range=(d_s, d_e))))['total']    
+        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user,
+                                                                               IO='expense', 
+                                                                             date__range=(d_s,d_e)) & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0  
     else:
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, IO='expense', category_id=category, date__range=(d_s, d_e))))['total']    
     
