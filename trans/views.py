@@ -93,8 +93,6 @@ def trans_add(request):
                 
                       
                 for row in rows:
-
-                    # if not trans.objects.filter(user_id=1, description=row['Description'],date=row['Date'],amount=row['Amount']).exists():
                         amount = row[Amount_column_name]
                         try:
                             amount =float(amount)
@@ -137,7 +135,6 @@ def trans_add(request):
                         elif card_type == 'Credit' and amount > 0 and amount_inversed == True:
                             category = 'refund or cashback'
                             category_main = 'cashback'
-                            category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category_main = main_category.objects.get(user_id=user,category_name=category_main)
                             category = categories_table.objects.get(user_id=user,categories_name=category)
                             IO = 'income'
@@ -191,14 +188,16 @@ def trans_add(request):
                         except ValueError:
                             date = row[Date_column_name]
                         
-                        print("Success")
+                        
                         if not trans.objects.filter(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category, main_category_id=category_main, IO = IO, Accounts_id= account_id).exists():
                             trans.objects.create(user_id=user,description=row[Description_column_name],date=date,amount=abs(amount), category_id = category,main_category_id=category_main, IO = IO, Accounts_id= account_id, family_id=family_id)
-                            print("")
-
+                        print(row[Description_column_name], date, amount)
+                        print("Success")
                 return redirect('/trans/?file_upload_success=1')
             except Exception:
-
+                print(row[Description_column_name], date, amount)
+              
+                print("fail")
                 return redirect('/trans/?file_upload_fail=1')
             
             
