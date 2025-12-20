@@ -596,12 +596,13 @@ def fixed_fees_remaining_calc(user,year, month_no):
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     categories = categories_table.objects.filter(user_id=user, Fixed_fees=True) 
     fixed_fees_remaining = 0
+    fixed_fees_month = budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,date__range=(d_s, d_e))))['total'] or 0 
     for category in categories:
         print(category.categories_name)
         category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, date__range=(d_s, d_e),category_id=category)))['total'] or 0
         category_target = budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,category_id=category,date__range=(d_s, d_e))))['total'] or 0 
         if category_spent_total >= category_target:
-            fixed_fees_remaining += budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,category_id=category,date__range=(d_s, d_e))))['total'] or 0 
+            fixed_fees_month -= budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,category_id=category,date__range=(d_s, d_e))))['total'] or 0 
     
     sympol = "$"  
     return f"{sympol}{fixed_fees_remaining:,.2f}"
