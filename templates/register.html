@@ -77,9 +77,15 @@
         </div>
         {% if request.GET.failed %}
   
-        <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="row alert alert-danger alert-dismissible fade show" role="alert">
           <div class = "col-auto">
               Registration <strong>failed</strong>
+              <p>
+              Your password can’t be too similar to your other personal information.
+              Your password must contain at least 8 characters.
+              Your password can’t be a commonly used password.
+              Your password can’t be entirely numeric.
+              </p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         </div>
