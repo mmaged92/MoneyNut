@@ -59,6 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'budgetapp.urls'
@@ -73,6 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                
             ],
         },
     },
@@ -123,6 +127,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -151,3 +156,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mahmoud.maged1992@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
+# LOGIN_URL = '/'
+# LOGOUT_REDIRECT_URL = '/'
+
+# AUTO_LOGOUT = {'IDLE_TIME': 5, 'REDIRECT_TO_LOGIN_IMMEDIATELY': True,  'REDIRECT_URL': '/', 
+#                'MESSAGE': 'The session has expired. Please login again to continue.',
+#                }
+
+SESSION_EXPIRE_SECONDS = 3600 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = '/'
