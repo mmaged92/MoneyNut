@@ -604,9 +604,9 @@ def fixed_fees_remaining_calc(user,year, month_no):
     print(date_today)
     for category in categories:
         print(category.categories_name)
-        # category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, date__range=(d_s, d_e),category_id=category)))['total'] or 0
+        category_spent_total = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, date__range=(d_s, d_e),category_id=category)))['total'] or 0
         # category_target = budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,category_id=category,date__range=(d_s, d_e))))['total'] or 0 
-        if date_today < d_e:
+        if date_today < d_e or category_spent_total== 0:
             fixed_fees_remaining +=budget_target.objects.aggregate(total=Sum('target',filter=Q(user_id=user,category_id=category,date__range=(date_today, d_e))))['total'] or 0 
         print(date_today)
         print(fixed_fees_remaining)
