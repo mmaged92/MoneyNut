@@ -137,12 +137,12 @@ def category_add(request):
             
     for category in main_category_list:
         if not main_category.objects.filter(user_id=user, category_name=category).exists():
-            main_category.objects.create(user_id=user,category_name=category,family_id=family_id)
+            main_category.objects.get_or_create(user_id=user,category_name=category,family_id=family_id)
     
     for category in category_list:
         if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
             main_category_name = main_category.objects.get(user_id=user,category_name=basic_main_category[category])
-            categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
+            categories_table.objects.get_or_create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
 
     if request.method == "POST":
         categories_new = request.POST.get('category')
@@ -446,7 +446,7 @@ def main_category_add(request):
 @login_required(login_url="/users/loginpage/")
 def main_category_get(request):
     user= request.user
-    categories = main_category.objects.filter(user_id=user)
+    categories = main_category.objects.filter(user_id=user).exclude(category_name__in=['credit card payment', 'cashback','unassigned','transfer','income'])
     category_list = []
     for category in categories:
         category_list.append({"Category":category.category_name, "category_id":category.id})
