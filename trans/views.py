@@ -9,7 +9,6 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 import json
 from django.contrib import messages
-import pandas as pd
 import io
 from datetime import datetime
 from family.models import familyMemebers

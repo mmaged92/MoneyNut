@@ -31,7 +31,11 @@ async function User_date_update(first_name_data,last_name_data,MS,GENDER,JT,PN,A
         body: JSON.stringify({first_name_data,last_name_data,MS,GENDER,JT,PN,AD,country,Region,ZPC,email}),
     })
     console.log(last_name_data)
-    
+    const data = await response.json();
+    console.log(data)
+    const messageDiv = document.getElementById("message");
+    messageDiv.classList.remove("d-none"); // shows the div
+    messageDiv.classList.add("show");      // triggers Bootstrap fade-in
 }
 
 
