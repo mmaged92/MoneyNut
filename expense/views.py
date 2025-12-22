@@ -663,7 +663,7 @@ def this_month_spent_percentage_calc(user,date):
     d_s = datetime(year,month,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     
-    categories = main_category.objects.filter(user_id=user).exclude(category_name=['income','transfer','credit card payment','cashback'])
+    categories = main_category.objects.filter(user_id=user).exclude(category_name__in=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(user,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -993,11 +993,7 @@ def total_spent(request):
     month_no = date.today().month
     return JsonResponse(total_spent_calc(request.user,year,month_no), safe=False)
 
-@login_required(login_url="/users/loginpage/")
-def total_spent(request):
-    year = date.today().year
-    month_no = date.today().month
-    return JsonResponse(total_spent_calc(request.user,year,month_no), safe=False)
+
 
 @login_required(login_url="/users/loginpage/")
 def current_balance(request):
