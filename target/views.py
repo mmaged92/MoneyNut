@@ -135,14 +135,14 @@ def category_add(request):
         family_id = None
 
             
-    for category in main_category_list:
-        if not main_category.objects.filter(user_id=user, category_name=category).exists():
-            main_category.objects.get_or_create(user_id=user,category_name=category,family_id=family_id)
+    # for category in main_category_list:
+    #     if not main_category.objects.filter(user_id=user, category_name=category).exists():
+    #         main_category.objects.get_or_create(user_id=user,category_name=category,family_id=family_id)
     
-    for category in category_list:
-        if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
-            main_category_name = main_category.objects.get(user_id=user,category_name=basic_main_category[category])
-            categories_table.objects.get_or_create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
+    # for category in category_list:
+    #     if not categories_table.objects.filter(user_id=user, categories_name=category).exists():
+    #         main_category_name = main_category.objects.get(user_id=user,category_name=basic_main_category[category])
+    #         categories_table.objects.get_or_create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
 
     if request.method == "POST":
         categories_new = request.POST.get('category')
