@@ -39,7 +39,7 @@ async function main_category_update_main(new_value, category_id) {
     const result = await response.json();
     const rowNode = gridOptions.api.getRowNode(String(category_id));
     if (rowNode) {
-            rowNode.setDataValue("Category", data.new_value);
+        rowNode.setDataValue("Category", result.new_value);
     }
 }
 async function main_category_update(new_value, category_id) {
@@ -59,7 +59,28 @@ async function main_category_update(new_value, category_id) {
     const result = await response.json();
     const rowNode = gridOptions.api.getRowNode(String(category_id));
     if (rowNode) {
-            rowNode.setDataValue("main_category", data.new_value);
+        rowNode.setDataValue("main_category", result.new_value);
+    }
+}
+
+async function category_update_cat(new_value, category_id) {
+
+    const response = await fetch('/target/category_update/', {
+        method: 'PUT',
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ new_value, category_id }),
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    const rowNode = gridOptions.api.getRowNode(String(category_id));
+    if (rowNode) {
+        rowNode.setDataValue("main_category", result.new_value);
     }
 }
 
@@ -80,9 +101,10 @@ async function fixed_fees_update(new_value, category_id) {
     }
 
     const result = await response.json();
+    console.log(result)
     const rowNode = gridOptions.api.getRowNode(String(category_id));
     if (rowNode) {
-            rowNode.setDataValue("fixed_fees", data.new_value);
+        rowNode.setDataValue("fixed_fees", result.new_value);
     }
 }
 
@@ -170,24 +192,19 @@ async function initGrid() {
                 }
             },
             {
-                field: "fixed_fees", filter: true, editable: true,
+                field: "fixed_fees",
+                filter: true,
+                editable: true,
                 cellDataType: "boolean",
-                valueGetter: params => {
-                    // Assuming params.data.isActive can be 'True', 'False', or actual booleans
-                    console.log(params.data.fixed_fees)
-                    if (params.data.fixed_fees === null) {
-                        console.log(params.data.fixed_fees)
-                        return params.data.fixed_fees === 'false';
-                    }
-                    else if (params.data.fixed_fees === 'True' || params.data.fixed_fees === 'true') {
-                        console.log(params.data.fixed_fees)
-                        return params.data.fixed_fees = true // Return as is if already a boolean
-                    }
-                    else if (params.data.fixed_fees === "False" || params.data.fixed_fees === 'false') {
-                        console.log(params.data.fixed_fees)
-                        return params.data.fixed_fees = false; // Return as is if already a boolean
-                    }
-                },
+                valueGetter: (params) => {
+                    const v = params.data.fixed_fees;
+
+                    if (v === true || v === false) return v;
+                    if (v === 'True' || v === 'true') return true;
+                    if (v === 'False' || v === 'false') return false;
+
+                    return null; // default fallback
+                }
             },
             { field: "category_id", hide: true },
             {
@@ -220,7 +237,7 @@ async function initGrid() {
 
         columnDefs: [
             { field: "Category", filter: true, editable: true },
-    
+
             { field: "category_id", hide: true },
             {
                 field: " ", cellRenderer: params => {
@@ -275,22 +292,22 @@ document.getElementById('deleteallmaincategory').addEventListener('click', () =>
 });
 
 
-async function submitmaincategory(newCategory){
-    
+async function submitmaincategory(newCategory) {
+
     const response = await fetch('/target/main_category_add/', {
         method: 'PUT',
         headers: {
             "X-CSRFToken": getCookie("csrftoken"),
             "Content-Type": "application/json",
         },
-        
-        body: JSON.stringify({newCategory}),
+
+        body: JSON.stringify({ newCategory }),
     });
     console.log(newCategory)
     window.location.reload();
 }
 
-document.getElementById('sendButton').addEventListener('click',()=>{
+document.getElementById('sendButton').addEventListener('click', () => {
     const main_category_get = document.getElementById('main-category-value').value;
     submitmaincategory(main_category_get)
 })
