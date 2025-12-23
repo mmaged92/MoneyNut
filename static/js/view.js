@@ -139,7 +139,8 @@ async function category_update_trans(new_value, category_id, transaction_id) {
     const result = await response.json();
     const rowNode = gridOptions.api.getRowNode(String(transaction_id));
     if (rowNode) {
-            rowNode.setDataValue("Category", data.new_value, data.main_cat);
+            rowNode.setDataValue("Category", data.new_value);
+            rowNode.setDataValue("Category_Main", data.main_cat);
     }
 }
 
