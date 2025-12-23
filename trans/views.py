@@ -346,6 +346,7 @@ def category_update(request):
         update_value = trans.objects.get(id=transaction_id)
         new_category_id = categories_table.objects.get(user_id=user,categories_name=new_value)
         update_value.category_id = new_category_id
+        update_value.main_category_id = new_category_id.main_category_id
         if new_value == 'income':
             IO = 'income'
             update_value.IO = IO
@@ -353,7 +354,7 @@ def category_update(request):
             IO = 'expense'
             update_value.IO = IO
         update_value.save()
-        return JsonResponse({'status': 'updated', 'new_value': new_value})
+        return JsonResponse({'status': 'updated', 'new_value': new_value, 'main_cat':new_category_id.main_category_id.category_name})
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
 @login_required(login_url="/users/loginpage/")
