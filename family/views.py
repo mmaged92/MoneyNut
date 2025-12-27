@@ -173,8 +173,14 @@ def remove_family_member(request):
         data = json.loads(request.body)
         remove_id = data.get('id')
         print(remove_id)
-        member = familyMemebers.objects.get(id=remove_id)
-        member.delete()
+        try:
+            member = familyMemebers.objects.get(id=remove_id)
+            member.delete()
+            invit = invitationstatus.objects.get(user_id=user)
+            invit.delete()
+        except Exception:
+            invit = invitationstatus.objects.get(user_id=user)
+            invit.delete()
         return JsonResponse({"status":"deleted"})
     return JsonResponse({"status":"Invalid method"})
 
@@ -191,7 +197,8 @@ def add_family(request):
         
         
         family_id = family.objects.get(Token=token)
-        if not familyMemebers.objects.filter(user_id=user,family_id=family_id).exits():
+        print(family_id)
+        if not familyMemebers.objects.filter(user_id=user,family_id=family_id).exists():
             familyMemebers.objects.create(user_id=user,family_id=family_id)
             invitaion = invitationstatus.objects.get(email_sent=email)
             invitaion.invitation_status = 'invitation accepted'
