@@ -336,8 +336,8 @@ def this_month_spent_percentage_calc(family_id,date):
     month = date.month
     d_s = datetime(year,month,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
-    
-    categories = main_category.objects.filter(family_id=family_id).exclude(category_name=['income','transfer','credit card payment','cashback'])
+    categories = main_category.objects.filter(family_id=family_id).exclude(category_name__in=['income','transfer','credit card payment','cashback'])
+
     Total_month_spent = category_main_spent_sum(family_id,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -673,7 +673,7 @@ def category_spent_pichart(family_id):
     d_s = datetime(year,month_no,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     
-    categories = main_category.objects.filter(family_id=family_id).exclude(category_name=['income','transfer','credit card payment','cashback'])
+    categories = main_category.objects.filter(family_id=family_id).exclude(category_name__in=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(family_id,None,d_s,d_e)
     
     if Total_month_spent == 0:
@@ -689,7 +689,7 @@ def category_pent_bar(family_id):
     month_no = next(int(n) for n, m in month_dict.items() if m == month)
     d_s = datetime(year,month_no,1)
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
-    categories = main_category.objects.filter(family_id=family_id).exclude(category_name=['income','transfer','credit card payment','cashback'])
+    categories = main_category.objects.filter(family_id=family_id).exclude(category_name__in=['income','transfer','credit card payment','cashback'])
     Total_month_spent = category_main_spent_sum(family_id,None,d_s,d_e)
     
     if Total_month_spent == 0:
