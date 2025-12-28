@@ -69,8 +69,6 @@ def trans_add(request):
                 Description_column_name = file_mapping.Description_header_name
                 Amount_column_name = file_mapping.Amount_header_name
             else:
-                mapping_required = True
-
                 return redirect('/trans/?mapping_required=1')
             
             amount_inversed = False
@@ -80,6 +78,15 @@ def trans_add(request):
                 # with open(file_path, newline='') as csvfile:
                 #     reader = csv.DictReader(csvfile)
                 for row in rows:
+                    line = 1
+                    if line == 1:
+                        try:
+                            row[Amount_column_name]
+                            row[Description_column_name]
+                            row[Date_column_name]
+                        except Exception:
+                            return redirect('/trans/?check_mapping=1')
+                        line += 1
                     amount  = row[Amount_column_name] if row['Amount'].strip() != '' else 0.0
                     try:
                         amount =float(amount)

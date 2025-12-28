@@ -6,7 +6,14 @@
 {% endblock %}
 
 {% block content %}
-
+{% if request.GET.check_mapping %}
+    <div class="row alert alert-warning alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+           <i class="fa-solid fa-triangle-exclamation"></i> Please Verify<strong> File Mapping</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif%}
 {% if request.GET.mapping_required %}
     <div class="row alert alert-warning alert-dismissible fade show" role="alert">
         <div class = "col-auto">
