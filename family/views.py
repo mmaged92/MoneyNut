@@ -197,6 +197,7 @@ def add_family(request):
         
         
         family_id = family.objects.get(Token=token)
+        
         print(family_id)
         if not familyMemebers.objects.filter(user_id=user,family_id=family_id).exists():
             familyMemebers.objects.create(user_id=user,family_id=family_id)
