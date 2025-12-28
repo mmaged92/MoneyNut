@@ -32,6 +32,14 @@
             </div>
         </div>
     </form>
+    {% if request.GET.success %}
+    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+        <div class = "col-auto">
+            <i class="fa-solid fa-circle-check"></i> You have been added to family <strong>successfully</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+{%endif %}
 </div>
 
     

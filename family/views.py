@@ -201,9 +201,11 @@ def add_family(request):
         if not familyMemebers.objects.filter(user_id=user,family_id=family_id).exists():
             familyMemebers.objects.create(user_id=user,family_id=family_id)
             invitaion = invitationstatus.objects.get(email_sent=email)
+            print(invitaion)
             invitaion.invitation_status = 'invitation accepted'
             invitaion.save()
             add_family_id(family_id,user)
+            return redirect('/family/add_family/?success=1')
     
     if familyMemebers.objects.filter(user_id=request.user).exists():
         isfamily = True
