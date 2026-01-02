@@ -471,7 +471,6 @@ def annual_savingCalc(user):
     return saving_list
 
 def monthly_balance_tracker(user):
-    print('asdasdasd',year)
     accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
     accounts_balance = 0
     account__balance_list = []
