@@ -145,7 +145,6 @@ def family_invite(request):
             family_id = familyMemebers.objects.get(user_id=user)
             token = family_id.family_id.Token
             
-            print(token)
         else:
             token = str(uuid.uuid4())
             family.objects.create(Token=token)
@@ -172,7 +171,6 @@ def remove_family_member(request):
     if request.method =='DELETE':
         data = json.loads(request.body)
         remove_id = data.get('id')
-        print(remove_id)
         try:
             member = familyMemebers.objects.get(id=remove_id)
             member.delete()
@@ -198,11 +196,9 @@ def add_family(request):
         
         family_id = family.objects.get(Token=token)
         
-        print(family_id)
         if not familyMemebers.objects.filter(user_id=user,family_id=family_id).exists():
             familyMemebers.objects.create(user_id=user,family_id=family_id)
             invitaion = invitationstatus.objects.get(email_sent=email)
-            print(invitaion)
             invitaion.invitation_status = 'invitation accepted'
             invitaion.save()
             add_family_id(family_id,user)
@@ -785,9 +781,27 @@ def monthly_balance_trackCalc(family_id):
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     month_title = month_dict_add[month_no]
     date = d_s
-    monthly_accounts_balance = monthly_balance_tracker(family_id)[month_no-2][month_dict_add[month_no-1]]
-    # print(monthly_balance_tracker(family_id)[month_no-2])
-    # print(monthly_accounts_balance)
+    balance = 0
+    for account in accounts:  
+           
+        income = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account, IO ='income',
+                                                                              date__lt=date)))['total'] or 0
+        transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                   IO='transfer-in', 
+                                                                                   date__lt=date)))['total'] or 0
+        transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                    IO='transfer-out',
+                                                                                    date__lt=date)))['total'] or 0
+        
+        expense = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                               IO='expense', 
+                                                                               date__lt=date)))['total'] or 0
+        try : 
+            balance = balance + income + transfer_in - transfer_out - expense  + account.Starting_balance
+        except Exception:
+            balance = balance + income + transfer_in - transfer_out - expense
+            
+    monthly_accounts_balance = balance    
     while(date <= d_e):
         for account in accounts:  
            
@@ -805,8 +819,8 @@ def monthly_balance_trackCalc(family_id):
                                                                                date=date)))['total'] or 0
                 
             monthly_accounts_balance = monthly_accounts_balance + income + transfer_in - transfer_out - expense
-            if date.month == account.Starting_balance_date.month and date.day == account.Starting_balance_date.day:
-                monthly_accounts_balance = monthly_accounts_balance + account.Starting_balance
+            # if date.month == account.Starting_balance_date.month and date.day == account.Starting_balance_date.day:
+            #     monthly_accounts_balance = monthly_accounts_balance + account.Starting_balance
         
         datedisplay = date.strftime("%b/%d")
         monthly_account__balance_list.append({"label": datedisplay, "y": round(monthly_accounts_balance,2)})           
@@ -816,11 +830,34 @@ def monthly_balance_trackCalc(family_id):
     return monthly_account__balance_list
 
 
-def monthly_balance_tracker(family_id):
-    print(year)
+def monthly_balance_tracker_fam(family_id):
     accounts = Accounts.objects.filter(family_id=family_id, account_type__in = ['Chequing','Saving'])
     accounts_balance = 0
     account__balance_list = []
+    d_s = datetime(year,1,1)
+    balance = 0
+    for account in accounts:  
+           
+        income = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account, IO ='income',
+                                                                              date__lt=d_s)))['total'] or 0
+        transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                   IO='transfer-in', 
+                                                                                   date__lt=d_s)))['total'] or 0
+        transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                    IO='transfer-out',
+                                                                                    date__lt=d_s)))['total'] or 0
+        
+        expense = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                               IO='expense', 
+                                                                               date__lt=d_s)))['total'] or 0
+        
+        try : 
+            if d_s.year > account.Starting_balance_date.year:
+                balance = balance + income + transfer_in - transfer_out - expense  + account.Starting_balance
+        except Exception:
+            balance = balance + income + transfer_in - transfer_out - expense
+            
+    accounts_balance = balance
     for month_no in range(1,13):
         d_s = datetime(year,month_no,1)
         d_e = d_s + relativedelta(months=1) - timedelta(days=1)
@@ -844,13 +881,12 @@ def monthly_balance_tracker(family_id):
             accounts_balance = accounts_balance + income + transfer_in - transfer_out - expense
             
             
-            if d_s.month == account.Starting_balance_date.month :
+            if d_s.month == account.Starting_balance_date.month and d_s.year == account.Starting_balance_date.year:
                 accounts_balance = accounts_balance + account.Starting_balance
             
             
-        # print(month_title,previous_balance, accounts_balance , difference)  
         account__balance_list.append({month_title: round(accounts_balance,2)} )
-    # print(account__balance_list[0])
+    
         
     return account__balance_list
 
@@ -1177,33 +1213,53 @@ def annual_savingCalc(family_id):
     return saving_list
 
 
-def annual_balance_trackCalc(family_id):
+def annual_balance_trackCalc_fam(family_id):
     account__balance_list = []
-    balances = monthly_balance_tracker(family_id)
+    balances = monthly_balance_tracker_fam(family_id)
     month_no = 1
     for month_no in range(1,13):
         month_title = month_dict_add[month_no]
-        # print(balances[month_no-1][month_title])
         accounts_balance = balances[month_no-1][month_title]
         if month_no == 1:
-            previous_balance = accounts_balance
-        else:
-            month_no = month_no - 1 
-            month_title = month_dict_add[month_no]
-            previous_balance = balances[month_no-1][month_title]
-        Variance = accounts_balance - previous_balance
+            d_s = datetime(year,1,1)
+            accounts = Accounts.objects.filter(family_id=family_id, account_type__in = ['Chequing','Saving'])
+            balance = 0
+            for account in accounts:  
+                
+                income = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account, IO ='income',
+                                                                                    date__lt=d_s)))['total'] or 0
+                transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                        IO='transfer-in', 
+                                                                                        date__lt=d_s)))['total'] or 0
+                transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, Accounts_id =account,
+                                                                                            IO='transfer-out',
+                                                                                            date__lt=d_s)))['total'] or 0
+                
+                expense = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id_id=family_id, Accounts_id =account,
+                                                                                    IO='expense', 
+                                                                                    date__lt=d_s)))['total'] or 0
+                balance = balance + income + transfer_in - transfer_out - expense 
+
             
+            previous_balance = balance
+        else:
+            month_no_prev = month_no -1
+            month_title_prev = month_dict_add[month_no_prev]
+            previous_balance = balances[month_no_prev-1][month_title_prev]
+
+        if month_no == 1: 
+            Variance = accounts_balance
+        else:
+            Variance = accounts_balance - previous_balance  
 
         account__balance_list.append({"label": month_title, "y": round(Variance,2)} )    
     account__balance_list.append({"label": "Net Balance", "isCumulativeSum": True} ) 
-     
     return account__balance_list
 
 
 
 def Expected_income_calc(family_id):
     Expected_income_list =[]      
-    print(year) 
     for month_no in range(1,13):
         d_s = datetime(year,month_no,1)
         d_e = d_s + relativedelta(months=1) - timedelta(days=1) 
@@ -1230,16 +1286,13 @@ def Expected_Saving_calc(family_id):
 
 
 @login_required(login_url="/users/loginpage/")
-def annual_target_view(request):
+def annual_target_view_fam(request):
     user = request.user
     global year
-    category_list = ["Overall"]
     if familyMemebers.objects.filter(user_id=user).exists():  
         family_id = familyMemebers.objects.get(user_id=user)  
         family_id = family_id.family_id
-        categories = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-        for category in categories:
-            category_list.append(category.categories_name)
+
     year = date.today().year
     if request.method == 'POST':
         year = request.POST.get('year')
@@ -1247,17 +1300,11 @@ def annual_target_view(request):
         request.session["selected_year"] = year
     else:
         year = request.session.get("selected_year", year)
-    
-    
-
-    selected_category = request.session.get("selected_category", "Overall")
-    
+        
     
     context = {
         'years': year_list,
         "selected_year": year,
-        "categories":category_list,
-        "selected_category":selected_category,
         "isfamily":True
     }  
     return render(request, 'family/annually_target_family.html', context)
@@ -1270,16 +1317,14 @@ def annual_get_target(request):
 
 
 @login_required(login_url="/users/loginpage/")
-def annual_actual_view(request):
+def annual_actual_view_fam(request):
     user = request.user
     global year
-    category_list = ["Overall"]
     if familyMemebers.objects.filter(user_id=user).exists():  
         family_id = familyMemebers.objects.get(user_id=user)  
         family_id = family_id.family_id
         categories = categories_table.objects.filter(family_id=family_id).exclude(categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])
-        for category in categories:
-            category_list.append(category.categories_name)
+
     year = date.today().year
     if request.method == 'POST':
         year = request.POST.get('year')
@@ -1288,16 +1333,13 @@ def annual_actual_view(request):
     else:
         year = request.session.get("selected_year", year)
     
-    
 
-    selected_category = request.session.get("selected_category", "Overall")
     context = {
         'years': year_list,
         "selected_year": year,
-        "categories":category_list,
-        "selected_category":selected_category,
         "isfamily":True
     }  
+    print("I am here", year)
     return render(request, 'family/annually_actual_family.html', context)
 
 
@@ -1338,10 +1380,10 @@ def annual_saving(request):
     return JsonResponse(annual_savingCalc(family_id.family_id), safe=False)
 
 @login_required(login_url="/users/loginpage/")
-def balance_track_annual(request):
+def balance_track_annual_fam(request):
     user = request.user
     family_id = familyMemebers.objects.get(user_id=user) 
-    return JsonResponse(annual_balance_trackCalc(family_id.family_id), safe=False)
+    return JsonResponse(annual_balance_trackCalc_fam(family_id.family_id), safe=False)
 
 @login_required(login_url="/users/loginpage/")
 def Expected_income_get(request):
@@ -1432,7 +1474,6 @@ def Target_status(goal_due_date,today_date,goal_created_on,Remaining,goal_target
     else:
         days_to_target = (goal_due_date - goal_created_on).days 
         days_to_ramaining = (goal_due_date - today_date).days
-        print(days_to_target,days_to_ramaining)
         if Remaining/days_to_ramaining > goal_target/days_to_target:
             target_status = "Not on Track"
         else:
@@ -1453,7 +1494,6 @@ def trans_get_family(request):
     family_id = familyMemebers.objects.get(user_id=user)
     family_id = family_id.family_id
     transactions = trans.objects.filter(family_id=family_id)
-    print(user.first_name)
     transactions_list = []
     for transaction in transactions:
         if transaction.category_id == None:

@@ -41,7 +41,7 @@
 
 async function fetchData() {
     try {
-        const response = await fetch('/expense/annual_view/annual_get_actual');
+        const response = await fetch('/family/annual_view/annual_get_actual');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

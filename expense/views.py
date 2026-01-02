@@ -471,7 +471,7 @@ def annual_savingCalc(user):
     return saving_list
 
 def monthly_balance_tracker(user):
-    print(year)
+    print('asdasdasd',year)
     accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
     accounts_balance = 0
     account__balance_list = []
@@ -527,7 +527,7 @@ def monthly_balance_tracker(user):
                 accounts_balance = accounts_balance + account.Starting_balance
             
             
-        print(month_title, accounts_balance)  
+        # print(month_title, accounts_balance)  
         account__balance_list.append({month_title: round(accounts_balance,2)} )
     # print(account__balance_list[0])
         
@@ -567,7 +567,6 @@ def annual_balance_trackCalc(user):
 
             
             previous_balance = balance
-            print(previous_balance)
             
             # previous_balance = accounts_balance
         else:
@@ -582,7 +581,7 @@ def annual_balance_trackCalc(user):
         else:
             Variance = accounts_balance - previous_balance
             
-        print(month_title,Variance,accounts_balance,previous_balance)  
+        # print(month_title,Variance,accounts_balance,previous_balance)  
 
         account__balance_list.append({"label": month_title, "y": round(Variance,2)} )    
     account__balance_list.append({"label": "Net Balance", "isCumulativeSum": True} ) 
