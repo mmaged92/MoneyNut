@@ -199,8 +199,6 @@ def category_spent_pichart(user):
         category_spent.append({'y': category_month_spent_total, 'name': category.category_name})
     return category_spent
 
-
-
 def category_pent_bar(user):
     category_spent=[]   
     month_no = next(int(n) for n, m in month_dict.items() if m == month)
@@ -472,7 +470,8 @@ def annual_savingCalc(user):
         saving_list.append({"label": month_title, "y": actual_saving} )    
     return saving_list
 
-def monthly_balance_tracker(year,user):
+def monthly_balance_tracker(user):
+    print(year)
     accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
     accounts_balance = 0
     account__balance_list = []
@@ -512,47 +511,31 @@ def monthly_balance_tracker(year,user):
 
 
 def annual_balance_trackCalc(user):
-    accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
-    monthly_accounts_balance = 0
-    monthly_account__balance_list = []
-    month_no = next(int(n) for n, m in month_dict.items() if m == month)
-    d_s = datetime(year,month_no,1)
-    d_e = d_s + relativedelta(months=12) - timedelta(days=1)
-    month_title = month_dict_add[month_no]
-    date = d_s
-    thisyear = datetime.today()
-    thisyear= thisyear.year
-    prevousyear=thisyear-1
-    if month_no == 1:
-        monthly_accounts_balance = monthly_balance_tracker(prevousyear,user)[11][month_dict_add[12]]
-    else:
-        monthly_accounts_balance = monthly_balance_tracker(thisyear,user)[month_no-2][month_dict_add[month_no-1]]
-    while(date <= d_e):
-        for account in accounts:  
-           
-            income = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account, IO ='income',
-                                                                              date=date)))['total'] or 0
-            transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                                   IO='transfer-in', 
-                                                                                   date=date)))['total'] or 0
-            transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                                    IO='transfer-out',
-                                                                                    date=date)))['total'] or 0
+    account__balance_list = []
+    balances = monthly_balance_tracker(user)
+    month_no = 1
+    for month_no in range(1,13):
+        month_title = month_dict_add[month_no]
+        accounts_balance = balances[month_no-1][month_title]
         
-            expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                               IO='expense', 
-                                                                               date=date)))['total'] or 0
-                
-            monthly_accounts_balance = monthly_accounts_balance + income + transfer_in - transfer_out - expense
-            if date.month == account.Starting_balance_date.month and date.day == account.Starting_balance_date.day:
-                monthly_accounts_balance = monthly_accounts_balance + account.Starting_balance
+        # print("current", month_no, month_title, accounts_balance)  
+        if month_no == 1:
+            previous_balance = accounts_balance
+        else:
+            month_no_prev = month_no -1
+            month_title_prev = month_dict_add[month_no_prev]
+            previous_balance = balances[month_no_prev-1][month_title_prev]
+            # print("previous", month_no_prev, month_title_prev, previous_balance)   
+         
         
-        datedisplay = date.strftime("%b/%d")
-        monthly_account__balance_list.append({"label": datedisplay, "y": round(monthly_accounts_balance,2)})           
-        print(monthly_account__balance_list,monthly_account__balance_list )
-        date = date +relativedelta(months=1)   
+        
+        Variance = accounts_balance - previous_balance
+        print(month_title,Variance,accounts_balance,previous_balance)  
+
+        account__balance_list.append({"label": month_title, "y": round(Variance,2)} )    
+    account__balance_list.append({"label": "Net Balance", "isCumulativeSum": True} ) 
      
-    return monthly_account__balance_list
+    return account__balance_list
 
 def monthly_balance_trackCalc(user):
     
@@ -564,30 +547,31 @@ def monthly_balance_trackCalc(user):
     d_e = d_s + relativedelta(months=1) - timedelta(days=1)
     month_title = month_dict_add[month_no]
     date = d_s
-
-    
-    balance_to_date = 0
+    # monthly_accounts_balance = monthly_balance_tracker(user)[month_no-2][month_dict_add[month_no-1]]
+    # print(monthly_accounts_balance)
+    # print(monthly_balance_tracker(user)[month_no-2])
+    balance = 0
     for account in accounts:  
            
         income = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account, IO ='income',
-                                                                              date__lt=d_s)))['total'] or 0
+                                                                              date__lt=date)))['total'] or 0
         transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
                                                                                    IO='transfer-in', 
-                                                                                   date__lt=d_s)))['total'] or 0
+                                                                                   date__lt=date)))['total'] or 0
         transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
                                                                                     IO='transfer-out',
-                                                                                    date__lt=d_s)))['total'] or 0
+                                                                                    date__lt=date)))['total'] or 0
         
         expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
                                                                                IO='expense', 
-                                                                               date__lt=d_s)))['total'] or 0  
+                                                                               date__lt=date)))['total'] or 0
+        try : 
+            
+            balance = balance + income + transfer_in - transfer_out - expense  + account.Starting_balance
+        except Exception:
+            balance = balance + income + transfer_in - transfer_out - expense
     
-    
-    
-        balance_to_date= balance_to_date + income + transfer_in - transfer_out - expense
-
-        print(balance_to_date)
-    monthly_accounts_balance = balance_to_date
+    monthly_accounts_balance = balance
     while(date <= d_e):
         for account in accounts:  
            
@@ -605,11 +589,9 @@ def monthly_balance_trackCalc(user):
                                                                                date=date)))['total'] or 0
                 
             monthly_accounts_balance = monthly_accounts_balance + income + transfer_in - transfer_out - expense
-            
-            if date.month == account.Starting_balance_date.month and date.day == account.Starting_balance_date.day:
-                monthly_accounts_balance = monthly_accounts_balance + account.Starting_balance
-            print(date, monthly_accounts_balance)
-            
+            # if date.month == account.Starting_balance_date.month and date.day == account.Starting_balance_date.day:
+            #     monthly_accounts_balance = monthly_accounts_balance + account.Starting_balance
+        
         datedisplay = date.strftime("%b/%d")
         monthly_account__balance_list.append({"label": datedisplay, "y": round(monthly_accounts_balance,2)})           
         # print(monthly_account__balance_list,monthly_account__balance_list )
