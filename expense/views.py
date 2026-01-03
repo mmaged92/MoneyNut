@@ -526,9 +526,7 @@ def monthly_balance_tracker(user):
                 accounts_balance = accounts_balance + account.Starting_balance
             
             
-        # print(month_title, accounts_balance)  
         account__balance_list.append({month_title: round(accounts_balance,2)} )
-    # print(account__balance_list[0])
         
     return account__balance_list
 
@@ -542,42 +540,43 @@ def annual_balance_trackCalc(user):
     for month_no in range(1,13):
         month_title = month_dict_add[month_no]
         accounts_balance = balances[month_no-1][month_title]
-        
-        # print("current", month_no, month_title, accounts_balance)  
-        if month_no == 1:
-            d_s = datetime(year,1,1)
-            accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
-            balance = 0
-            for account in accounts:  
+        # if month_no == 1:
+        #     d_s = datetime(year,1,1)
+        #     accounts = Accounts.objects.filter(user_id=user, account_type__in = ['Chequing','Saving'])
+        #     balance = 0
+        #     for account in accounts:  
                 
-                income = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account, IO ='income',
-                                                                                    date__lt=d_s)))['total'] or 0
-                transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                                        IO='transfer-in', 
-                                                                                        date__lt=d_s)))['total'] or 0
-                transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                                            IO='transfer-out',
-                                                                                            date__lt=d_s)))['total'] or 0
+        #         income = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account, IO ='income',
+        #                                                                             date__lt=d_s)))['total'] or 0
+        #         transfer_in = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
+        #                                                                                 IO='transfer-in', 
+        #                                                                                 date__lt=d_s)))['total'] or 0
+        #         transfer_out = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
+        #                                                                                     IO='transfer-out',
+        #                                                                                     date__lt=d_s)))['total'] or 0
                 
-                expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
-                                                                                    IO='expense', 
-                                                                                    date__lt=d_s)))['total'] or 0
-                balance = balance + income + transfer_in - transfer_out - expense 
+        #         expense = trans.objects.aggregate(total=Sum('amount', filter=Q(user_id=user, Accounts_id =account,
+        #                                                                             IO='expense', 
+        #                                                                             date__lt=d_s)))['total'] or 0
+        #         balance = balance + income + transfer_in - transfer_out - expense 
 
             
-            previous_balance = balance
+        #     previous_balance = balance
             
-            # previous_balance = accounts_balance
-        else:
-            month_no_prev = month_no -1
-            month_title_prev = month_dict_add[month_no_prev]
-            previous_balance = balances[month_no_prev-1][month_title_prev]
-            # print("previous", month_no_prev, month_title_prev, previous_balance)   
+            
+        # else:
+        #     month_no_prev = month_no -1
+        #     month_title_prev = month_dict_add[month_no_prev]
+        #     previous_balance = balances[month_no_prev-1][month_title_prev]
+        #     # print("previous", month_no_prev, month_title_prev, previous_balance)   
          
         
         if month_no == 1: 
             Variance = accounts_balance
         else:
+            month_no_prev = month_no -1
+            month_title_prev = month_dict_add[month_no_prev]
+            previous_balance = balances[month_no_prev-1][month_title_prev]
             Variance = accounts_balance - previous_balance
             
         # print(month_title,Variance,accounts_balance,previous_balance)  
