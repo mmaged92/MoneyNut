@@ -126,20 +126,14 @@ def register(request):
         if form.is_valid():
             login(request, form.save())
             user = request.user
-            # date = request.POST.get('Date_of_birth')
             UserProfile.objects.create(user_id=user)
             family_id=None
-            
             for category in main_category_list:
                 main_category.objects.create(user_id=user,category_name=category,family_id=family_id)
-    
             for category in category_list:
                 main_category_name = main_category.objects.get(user_id=user,category_name=basic_main_category[category])
                 categories_table.objects.create(user_id=user,categories_name=category,family_id=family_id,main_category_id=main_category_name)
-            user = form.cleaned_data.get('username')
-
-            messages.success(request, " Account was created for " + user)
-        
+             
             return redirect("dashboard_view")
 
         else:
@@ -148,6 +142,10 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('dashboard_view')
     
+    
+    
+    
+
     context = {"form" : form }
     return render(request, "register.html" , context)
 
