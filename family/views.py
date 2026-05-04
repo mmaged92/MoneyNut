@@ -1123,14 +1123,14 @@ def get_actual_calc(family_id):
         d_s = datetime(year, month_no, 1)
         d_e = d_s + relativedelta(months=1) - timedelta(days=1)
         month_title = month_dict_add[month_no]
-        actual_month_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id,IO='expense', date__range=(d_s, d_e))))['total'] or 0
-        category_dict[month_title] = round(actual_month_total,2)
+        actual_month_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id,IO='expense', date__range=(d_s, d_e))
+                                                                & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0        category_dict[month_title] = round(actual_month_total,2)
         
         
     d_s = datetime(year, 1, 1)
     d_e = datetime(year, 12, 1)       
-    actual_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id,IO='expense', date__range=(d_s, d_e))))['total'] or 0    
-    category_dict['Total_Actual'] = round(actual_total,2)
+    actual_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id,IO='expense', date__range=(d_s, d_e))
+                                                      & ~Q(category_id__categories_name__in=['credit card payment', 'refund or cashback','transfer','income'])))['total'] or 0     category_dict['Total_Actual'] = round(actual_total,2)
     
     try:
         target_total = budget_target.objects.aggregate(total=Sum('target', filter=Q(family_id=family_id, year=year)))['total'] or 0
