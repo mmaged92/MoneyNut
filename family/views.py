@@ -1090,8 +1090,7 @@ def get_actual_calc(family_id):
 
         Category_actual_annual_total = trans.objects.aggregate(total=Sum('amount', filter=Q(family_id=family_id, IO='expense',category_id=category ,date__range=(d_s, d_e))))['total'] or 0
          
-        
-        
+    
         try:
             Category_target_total = budget_target.objects.aggregate(total=Sum('target', filter=Q(family_id=family_id,category_id = category.id, date__range=(d_s, d_e))))['total'] or 0
             
