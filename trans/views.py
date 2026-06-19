@@ -87,7 +87,9 @@ def trans_add(request):
                         except Exception:
                             return redirect('/trans/?check_mapping=1')
                         line += 1
-                    amount  = row[Amount_column_name] if row['Amount'].strip() != '' else 0.0
+                    
+                    # print(row[Amount_column_name])
+                    amount  = row[Amount_column_name] if row[Amount_column_name].strip() != '' else 0.0
                     try:
                         amount =float(amount)
                     except Exception:
