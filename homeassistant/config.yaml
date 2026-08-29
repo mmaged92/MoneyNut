@@ -1,0 +1,33 @@
+name: "MoneyNut"
+version: "1.0.0"
+slug: "moneynut"
+description: "Private Django finance tracker"
+url: "https://github.com/mmaged92/MoneyNut"
+image: "ghcr.io/mmaged92/moneynut-{arch}"
+init: false
+startup: services
+boot: auto
+arch:
+  - amd64
+ports:
+  8090/tcp: 8090
+ports_description:
+  8090/tcp: "MoneyNut web interface"
+webui: "http://[HOST]:[PORT:8090]"
+map:
+  - type: share
+    read_only: true
+options:
+  timezone: "America/Edmonton"
+  allowed_hosts: "home.moneynut.xyz,moneynut.xyz,www.moneynut.xyz,192.168.4.27,localhost,127.0.0.1"
+  csrf_trusted_origins: "https://home.moneynut.xyz,https://moneynut.xyz,https://www.moneynut.xyz"
+  secure_cookies: true
+  email_host_user: ""
+  email_host_password: ""
+schema:
+  timezone: str
+  allowed_hosts: str
+  csrf_trusted_origins: str
+  secure_cookies: bool
+  email_host_user: str
+  email_host_password: password

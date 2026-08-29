@@ -1,0 +1,10 @@
+.git
+.github
+.env
+.venv
+**/__pycache__
+*.pyc
+*.sqlite3
+db.sqlite3
+sqlite3.exe
+staticfiles
