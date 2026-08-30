@@ -1,4 +1,3 @@
-import re
 
 from django.urls import get_script_prefix, set_script_prefix
 
@@ -51,16 +50,14 @@ class HomeAssistantIngressMiddleware:
         ):
             html = response.content.decode(response.charset)
 
-            html = re.sub(
-                r"""(?P<attribute>href|src|action)=(?P<quote>["'])/(?!/)""",
-                rf"""\g<attribute>=\g<quote>{ingress_path}/""",
-                html,
+            html = html.replace(
+                '"/media/',
+                f'"{ingress_path}/media/',
             )
 
-            html = re.sub(
-                r"""url\((?P<quote>["']?)/(?!/)""",
-                rf"""url(\g<quote>{ingress_path}/""",
-                html,
+            html = html.replace(
+                "'/media/",
+                f"'{ingress_path}/media/",
             )
 
             ingress_script = f"""
