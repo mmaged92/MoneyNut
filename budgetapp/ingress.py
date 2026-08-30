@@ -14,6 +14,10 @@ class HomeAssistantIngressMiddleware:
             "HTTP_X_INGRESS_PATH", ""
         ).rstrip("/")
 
+        if ingress_path and request.META.get("HTTP_ORIGIN") == "null":
+          request.META["HTTP_ORIGIN"] = (f"{request.scheme}://{request.get_host()}"
+    )
+
         previous_prefix = get_script_prefix()
 
         if ingress_path:
