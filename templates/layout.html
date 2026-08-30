@@ -12,7 +12,13 @@
 
 
         <script>
-          window.moneyNutIngressPath = "{{ ingress_path|escapejs }}";
+          const ingressMatch = window.location.pathname.match(
+            /^\/api\/hassio_ingress\/[^/]+/
+        );
+
+          window.moneyNutIngressPath = ingressMatch
+            ? ingressMatch[0]
+            : "";
 
           window.moneyNutUrl = function (path) {
               return window.moneyNutIngressPath + path;
