@@ -1,5 +1,9 @@
-
-from django.urls import get_script_prefix, set_script_prefix
+from django.urls import (
+    Resolver404,
+    get_script_prefix,
+    resolve,
+    set_script_prefix,
+)
 
 
 class HomeAssistantIngressMiddleware:
@@ -22,6 +26,20 @@ class HomeAssistantIngressMiddleware:
         if ingress_path:
             request.META["SCRIPT_NAME"] = ingress_path
             set_script_prefix(f"{ingress_path}/")
+            # Avoid trailing-slash redirects through Home Assistant Ingress.
+            if not request.path_info.endswith("/"):
+                try:
+                    resolve(request.path_info)
+                except Resolver404:
+                    path_with_slash = f"{request.path_info}/"
+
+                    try:
+                        resolve(path_with_slash)
+                    except Resolver404:
+                        pass
+                    else:
+                        request.path_info = path_with_slash
+                        request.META["PATH_INFO"] = path_with_slash
 
         try:
             response = self.get_response(request)
