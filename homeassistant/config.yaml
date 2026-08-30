@@ -1,5 +1,5 @@
 name: "MoneyNut"
-version: "1.0.2"
+version: "1.0.3"
 slug: "moneynut"
 description: "Private Django finance tracker"
 url: "https://github.com/mmaged92/MoneyNut"
