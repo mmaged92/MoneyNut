@@ -60,6 +60,16 @@ class HomeAssistantIngressMiddleware:
                 f"'{ingress_path}/media/",
             )
 
+            html = html.replace(
+                '"/static/',
+                f'"{ingress_path}/static/',
+            )
+
+            html = html.replace(
+                "'/static/",
+                f"'{ingress_path}/static/",
+            )
+
             ingress_script = f"""
 <script>
 (() => {{
