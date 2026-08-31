@@ -30,7 +30,7 @@ async function confirm_delete_account(account_id) {
   const response = await fetch(window.moneyNutUrl('/accounts/delete/'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ account_id }),
@@ -48,7 +48,7 @@ async function Bank_update(newValue, account_id) {
   const response = await fetch(window.moneyNutUrl('/accounts/bank_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ newValue, account_id }),
@@ -67,7 +67,7 @@ async function account_type_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),
@@ -87,7 +87,7 @@ async function account_name_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),
@@ -107,7 +107,7 @@ async function account_number_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),
@@ -127,7 +127,7 @@ async function Starting_balance_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),
@@ -146,7 +146,7 @@ async function account_balance_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),
@@ -166,7 +166,7 @@ async function account_balance_date_update(newValue, account_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, account_id }),

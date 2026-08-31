@@ -51,7 +51,7 @@ async function confirm_delete_target(target_id) {
     {
       method: 'DELETE',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ target_id }),
@@ -66,7 +66,7 @@ async function category_update_target(newValue, category_id, target_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, category_id, target_id }),
@@ -84,7 +84,7 @@ async function tagert_update(newValue, target_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, target_id }),
@@ -103,7 +103,7 @@ async function freq_update(newValue, target_id, year, month) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, target_id, year, month }),
@@ -122,7 +122,7 @@ async function date_update(newValue, target_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, target_id }),

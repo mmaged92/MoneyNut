@@ -25,7 +25,7 @@ async function confirm_delete_goal(goal_id) {
   const response = await fetch(window.moneyNutUrl('/saving/goal/delete_goal'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ goal_id }),
@@ -39,7 +39,7 @@ async function goal_name_update(newValue, goal_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, goal_id }),
@@ -57,7 +57,7 @@ async function goal_account_update(newValue, goal_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, goal_id }),
@@ -75,7 +75,7 @@ async function goal_target_update(newValue, goal_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, goal_id }),
@@ -96,7 +96,7 @@ async function goal_due_date_update(newValue, goal_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, goal_id }),

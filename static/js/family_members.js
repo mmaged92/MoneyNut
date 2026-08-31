@@ -26,7 +26,7 @@ async function delete_member(id) {
     {
       method: 'DELETE',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id }),

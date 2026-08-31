@@ -2,7 +2,7 @@
 //     const response = await fetch(window.moneyNutUrl('/expense/monthly_view/category_get_view/'), {
 //         method: 'POST',
 //         headers: {
-//             "X-CSRFToken": getCookie("csrftoken"),
+//             "X-CSRFToken": getCookie('moneynut_csrftoken'),
 //             "Content-Type": "application/json",
 //         },
 //         body: JSON.stringify({ category_view })

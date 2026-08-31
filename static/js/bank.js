@@ -19,7 +19,7 @@ async function confirm_delete_bank(BanK_id) {
     {
       method: 'DELETE',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ BanK_id }),
@@ -40,7 +40,7 @@ async function Bank_update(newValue, Bank_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, Bank_id }),

@@ -62,7 +62,7 @@ async function description_update(new_value, transaction_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ new_value, transaction_id }),
@@ -85,7 +85,7 @@ async function date_update(new_value, transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/date_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, transaction_id }),
@@ -107,7 +107,7 @@ async function amount_update(new_value, transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/amount_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, transaction_id }),
@@ -129,7 +129,7 @@ async function IO_update(new_value, transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/IO_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, transaction_id }),
@@ -151,7 +151,7 @@ async function category_update_trans(new_value, category_id, transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/category_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, category_id, transaction_id }),
@@ -173,7 +173,7 @@ async function account_update(new_value, Account_id, transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/account_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, Account_id, transaction_id }),
@@ -196,7 +196,7 @@ async function confirm_delete(transaction_id) {
   const response = await fetch(window.moneyNutUrl('/trans/delete/'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ transaction_id }),
@@ -347,7 +347,7 @@ async function refresh_page() {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ refresh: 'refresh' }),

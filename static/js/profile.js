@@ -44,7 +44,7 @@ async function User_date_update(
   const response = await fetch(window.moneyNutUrl('/profile/user_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

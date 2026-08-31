@@ -27,7 +27,7 @@ async function main_category_update_main(new_value, category_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ new_value, category_id }),
@@ -49,7 +49,7 @@ async function main_category_update(new_value, category_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ new_value, category_id }),
@@ -70,7 +70,7 @@ async function category_update_cat(new_value, category_id) {
   const response = await fetch(window.moneyNutUrl('/target/category_update/'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, category_id }),
@@ -93,7 +93,7 @@ async function fixed_fees_update(new_value, category_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ new_value, category_id }),
@@ -120,7 +120,7 @@ async function confirm_delete(category_id) {
   const response = await fetch(window.moneyNutUrl('/target/delete/'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ category_id }),
@@ -145,7 +145,7 @@ async function main_confirm_delete(category_id) {
     {
       method: 'DELETE',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ category_id }),
@@ -304,7 +304,7 @@ async function submitmaincategory(newCategory) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
 

@@ -30,7 +30,7 @@ async function file_mapping_fn(
   const response = await fetch(window.moneyNutUrl('/trans/file_mapping/'), {
     method: 'POST',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

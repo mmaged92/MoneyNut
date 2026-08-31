@@ -7,7 +7,7 @@ async function confirm_delete(keyword_id) {
   const response = await fetch(window.moneyNutUrl('/trans/keyword/delete'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ keyword_id }),
@@ -28,7 +28,7 @@ async function keyword_update(new_value, keyword_id) {
   const response = await fetch(window.moneyNutUrl('/trans/keyword/update'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ new_value, keyword_id }),
@@ -53,7 +53,7 @@ async function category_update(new_value, category_id, keyword_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ new_value, category_id, keyword_id }),

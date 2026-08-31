@@ -24,7 +24,7 @@ async function confirm_delete_saving(target_id) {
   const response = await fetch(window.moneyNutUrl('/saving/delete_saving'), {
     method: 'DELETE',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ target_id }),
@@ -38,7 +38,7 @@ async function saving_tagert_update(newValue, saving_target_id) {
     {
       method: 'PUT',
       headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
+        'X-CSRFToken': getCookie('moneynut_csrftoken'),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newValue, saving_target_id }),
@@ -55,7 +55,7 @@ async function freq_update(newValue, saving_target_id, year, month) {
   const response = await fetch(window.moneyNutUrl('/saving/freq_update'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ newValue, saving_target_id, year, month }),
@@ -70,7 +70,7 @@ async function date_update(newValue, saving_target_id) {
   const response = await fetch(window.moneyNutUrl('/saving/date_update'), {
     method: 'PUT',
     headers: {
-      'X-CSRFToken': getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('moneynut_csrftoken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ newValue, saving_target_id }),
